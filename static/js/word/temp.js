@@ -98,7 +98,7 @@ require(['jquery', 'moment'],function($, moment){
 			}
 			currDay.add(1, "d");
 		}
-		$("#result").val(result);
+		$("#schedule").val(result);
 	}
 	getText();
 	$("#flush_btn").on('click', getText);
