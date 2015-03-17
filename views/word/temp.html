@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>时间计算</title>
+<style>
+.content{width: 200px; height: 500px;font-size:large}
+.editcontent{width: 500px;}
+.error_res{color:red}
+.result{width:300px}
+.big_btn{height:80px;width:200px}
+</style>
+</head>
+<body>
+
+	content:
+	<br>
+	<textarea id="note_content" class="content"></textarea>
+	<textarea id="result" class="content editcontent"></textarea>
+	<br>
+	<input id="flush_btn" type="button"  value="更新" class="big_btn"/>---
+	<input type="button" id="submit_btn" value="提交" class="big_btn"/>---
+	<input type="button" id="calculate" value="重新计算" class="big_btn"/>
+	<br>
+	<input id="result" class="result"/>
+	<br>
+	<input type="checkbox" id="showOld" />
+	<label for="showOld">显示旧数据</label>
+
+</body>
+<script type="text/javascript" data-main="../static/js/word/temp.js" src="../static/js/require.js" ></script>
+</html>
