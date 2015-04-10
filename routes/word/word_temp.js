@@ -3,9 +3,10 @@
  * GET home page.
  */
 var fs = require('fs');
+var SC = require('../common/StringConstant');
 
 
-var NL = '\n';
+var NL = SC.NL;
 
 var storeFile = '/home/zhch/document/wordnote/notes_store.js';
 var logFile = '/home/zhch/document/wordnote/notes.log';
@@ -79,4 +80,9 @@ exports.page = function(req, res){
 
 
 exports.saveDayWords = function(req, res){
-    
+    var content = req.body.content;
+    var lines = content.split(NL);
+    for(var i=0;i<lines.length;i++){
+        console.log("---"+lines[i]+"===");
+    }
+}

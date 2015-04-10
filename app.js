@@ -48,6 +48,7 @@ app.post('/user/:name', user.post);
 app.get('/temp/page', temp.page);
 app.get('/temp/view', temp.view);
 app.post('/temp/save', temp.save);
+app.post('/temp/saveDayWords', temp.saveDayWords);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));

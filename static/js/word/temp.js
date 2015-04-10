@@ -100,8 +100,25 @@ require(['jquery', 'moment'],function($, moment){
 		}
 		$("#schedule").val(result);
 	}
+    
+    // 提交一天的单词
+    function postDayWord(){
+        var content = $("#note_content").val();
+		var url = "/temp/saveDayWords";
+		$("#result").val("");
+		$("#result").removeClass("error_res");
+		$.post(url,{content:content},function(o){
+			if(o.status===1){
+				$("#result").val("DayWords" + "提交成功--" + new Date());
+			}else{
+				$("#result").addClass("error_res");
+				$("#result").val("DayWords err:" + o.msg + "--" + new Date());
+			}
+		},"json");
+    }
 	getText();
 	$("#flush_btn").on('click', getText);
 	$("#submit_btn").on('click', submitText);
 	$("#calculate").on('click', calculate);
+	$("#day_words_post").on('click', postDayWord);
 });
