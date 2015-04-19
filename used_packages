@@ -1,3 +1,25 @@
+
+> contextify@0.1.13 install D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify
+> node-gyp rebuild
+
+
+D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify>node "D:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin\\..\..\node_modules\node-gyp\bin\node-gyp.js" rebuild 
+Building the projects in this solution one at a time. To enable parallel build, please add the "/m" switch.
+  contextify.cc
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(179): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\contextify.vcxproj]
+          with
+          [
+              T=v8::Object
+          ]
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(179): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\contextify.vcxproj]
+          with
+          [
+              T=v8::FunctionTemplate
+          ]
+     Creating library D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\Release\contextify.lib and object D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\Release\contextify.exp
+  Generating code
+  Finished generating code
+  contextify.vcxproj -> D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\Release\\contextify.node
 ejs@2.3.1 node_modules\ejs
 
 method-override@2.3.2 node_modules\method-override
@@ -6,15 +28,13 @@ method-override@2.3.2 node_modules\method-override
 ├── parseurl@1.3.0
 └── debug@2.1.3 (ms@0.7.0)
 
+jquery@2.1.3 node_modules\jquery
+
 serve-favicon@2.2.0 node_modules\serve-favicon
-├── ms@0.7.0
 ├── fresh@0.2.4
+├── ms@0.7.0
 ├── parseurl@1.3.0
 └── etag@1.5.1 (crc@3.2.1)
-
-errorhandler@1.3.5 node_modules\errorhandler
-├── escape-html@1.0.1
-└── accepts@1.2.5 (negotiator@0.5.1, mime-types@2.0.10)
 
 body-parser@1.12.3 node_modules\body-parser
 ├── content-type@1.0.1
@@ -27,47 +47,66 @@ body-parser@1.12.3 node_modules\body-parser
 ├── on-finished@2.2.0 (ee-first@1.1.0)
 └── type-is@1.6.1 (media-typer@0.3.0, mime-types@2.0.10)
 
-express@4.12.3 node_modules\express
-├── merge-descriptors@1.0.0
-├── methods@1.1.1
-├── fresh@0.2.4
-├── utils-merge@1.0.0
-├── cookie@0.1.2
+errorhandler@1.3.5 node_modules\errorhandler
 ├── escape-html@1.0.1
-├── cookie-signature@1.0.6
-├── range-parser@1.0.2
-├── vary@1.0.0
-├── finalhandler@0.3.4
-├── content-type@1.0.1
-├── parseurl@1.3.0
-├── serve-static@1.9.2
-├── content-disposition@0.5.0
-├── path-to-regexp@0.1.3
-├── depd@1.0.1
-├── qs@2.4.1
-├── debug@2.1.3 (ms@0.7.0)
-├── on-finished@2.2.0 (ee-first@1.1.0)
-├── etag@1.5.1 (crc@3.2.1)
-├── proxy-addr@1.0.7 (forwarded@0.1.0, ipaddr.js@0.1.9)
-├── send@0.12.2 (destroy@1.0.3, ms@0.7.0, mime@1.3.4)
-├── accepts@1.2.5 (negotiator@0.5.1, mime-types@2.0.10)
-└── type-is@1.6.1 (media-typer@0.3.0, mime-types@2.0.10)
-
-multer@0.1.8 node_modules\multer
-├── qs@1.2.2
-├── mkdirp@0.3.5
-├── type-is@1.5.7 (media-typer@0.3.0, mime-types@2.0.10)
-└── busboy@0.2.9 (dicer@0.2.3, readable-stream@1.1.13)
+└── accepts@1.2.5 (negotiator@0.5.1, mime-types@2.0.10)
 
 stylus@0.50.0 node_modules\stylus
 ├── css-parse@1.7.0
 ├── mkdirp@0.3.5
 ├── debug@2.1.3 (ms@0.7.0)
 ├── source-map@0.1.43 (amdefine@0.1.0)
-├── sax@0.5.8
-└── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
+├── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
+└── sax@0.5.8
+
+express@4.12.3 node_modules\express
+├── merge-descriptors@1.0.0
+├── methods@1.1.1
+├── fresh@0.2.4
+├── utils-merge@1.0.0
+├── cookie@0.1.2
+├── cookie-signature@1.0.6
+├── range-parser@1.0.2
+├── escape-html@1.0.1
+├── content-type@1.0.1
+├── finalhandler@0.3.4
+├── vary@1.0.0
+├── parseurl@1.3.0
+├── content-disposition@0.5.0
+├── serve-static@1.9.2
+├── path-to-regexp@0.1.3
+├── depd@1.0.1
+├── qs@2.4.1
+├── debug@2.1.3 (ms@0.7.0)
+├── etag@1.5.1 (crc@3.2.1)
+├── on-finished@2.2.0 (ee-first@1.1.0)
+├── proxy-addr@1.0.7 (forwarded@0.1.0, ipaddr.js@0.1.9)
+├── send@0.12.2 (destroy@1.0.3, ms@0.7.0, mime@1.3.4)
+├── type-is@1.6.1 (media-typer@0.3.0, mime-types@2.0.10)
+└── accepts@1.2.5 (negotiator@0.5.1, mime-types@2.0.10)
+
+multer@0.1.8 node_modules\multer
+├── qs@1.2.2
+├── mkdirp@0.3.5
+├── busboy@0.2.9 (readable-stream@1.1.13, dicer@0.2.3)
+└── type-is@1.5.7 (media-typer@0.3.0, mime-types@2.0.10)
 
 express-logger@0.0.3 node_modules\express-logger
 ├── mkdir@0.0.2
 ├── express@2.5.9 (qs@0.4.2, mime@1.2.4, mkdirp@0.3.0, connect@1.9.2)
 └── datetime@0.0.3 (vows@0.8.1)
+
+jsdom@3.1.2 node_modules\jsdom
+├── xmlhttprequest@1.7.0
+├── xml-name-validator@1.0.0
+├── browser-request@0.3.3
+├── cssom@0.3.0
+├── nwmatcher@1.3.4
+├── parse5@1.4.2
+├── acorn-globals@1.0.4 (acorn@1.0.3)
+├── htmlparser2@3.8.2 (domelementtype@1.3.0, entities@1.0.0, domhandler@2.3.0, readable-stream@1.1.13, domutils@1.5.1)
+├── escodegen@1.6.1 (esutils@1.1.6, estraverse@1.9.3, optionator@0.5.0, source-map@0.1.43, esprima@1.2.5)
+├── acorn@0.11.0
+├── request@2.55.0 (caseless@0.9.0, aws-sign2@0.5.0, json-stringify-safe@5.0.0, forever-agent@0.6.1, oauth-sign@0.6.0, stringstream@0.0.4, tunnel-agent@0.4.0, isstream@0.1.2, qs@2.4.1, node-uuid@1.4.3, combined-stream@0.0.7, bl@0.9.4, form-data@0.2.0, mime-types@2.0.10, tough-cookie@0.12.1, http-signature@0.10.1, hawk@2.3.1, har-validator@1.6.1)
+├── cssstyle@0.2.23
+└── contextify@0.1.13 (bindings@1.2.1, nan@1.5.3)

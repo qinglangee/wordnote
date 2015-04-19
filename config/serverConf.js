@@ -7,7 +7,7 @@ var wordnote ={
 var tempdir = {
     log: base + "notes.log",
     store:base + "notes_store.js",
-    words:base + "daywords",
+    words:base + "daywords/",
 
 }
 exports.wordnote=wordnote;

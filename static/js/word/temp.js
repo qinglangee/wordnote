@@ -5,30 +5,37 @@ require.config({
     }
 });
 require(['jquery', 'moment'],function($, moment){
+    function showInfo(msg){
+        $("#result").removeClass("error_res");
+		$("#result").val(msg);
+    }
+    function showErr(msg){
+        $("#result").addClass("error_res");
+		$("#result").val(msg);
+    }
 	function getText(){
 		var url = "/temp/view";
 		$.get(url,{},function(o){
 			if(o.status===1){
 				$("#note_content").val(o.content);
 				calculate();
-			}
+            }else{
+                showErr(o.msg);
+            }
 		},"json");
 	}
 	function submitText(){
 		var content = $("#note_content").val();
 		var url = "/temp/save";
-		$("#result").val("");
-		$("#result").removeClass("error_res");
 		$.post(url,{content:content},function(o){
 			if(o.status===1){
-				$("#result").val("提交成功--" + new Date());
+				showInfo("提交成功--" + new Date());
 			}else{
-				$("#result").addClass("error_res");
-				$("#result").val(o.msg + "--" + new Date());
+				showErr(o.msg + "--" + new Date());
 			}
 		},"json");
 	}
-	
+
 	var reviewTime = [1,2,4,7,15,25];
 	var resultMap = {};
 	function calculate(){ // 计算结果, 存在resultMap中
@@ -39,7 +46,7 @@ require(['jquery', 'moment'],function($, moment){
 			for(var j=0;j<reviewTime.length;j++){
 				var startDate = moment(r.time);
 				var reviewDay = startDate.add(reviewTime[j], "d").format('YYYY-MM-DD');
-				var reviewList = resultMap[reviewDay]; 
+				var reviewList = resultMap[reviewDay];
 				if(reviewList == null){
 					reviewList = [];
 					reviewList[0] = r;
@@ -100,7 +107,7 @@ require(['jquery', 'moment'],function($, moment){
 		}
 		$("#schedule").val(result);
 	}
-    
+
     // 提交一天的单词
     function postDayWord(){
         var content = $("#note_content").val();
@@ -108,11 +115,10 @@ require(['jquery', 'moment'],function($, moment){
 		$("#result").val("");
 		$("#result").removeClass("error_res");
 		$.post(url,{content:content},function(o){
-			if(o.status===1){
+			if(o.err===0){
 				$("#result").val("DayWords" + "提交成功--" + new Date());
 			}else{
-				$("#result").addClass("error_res");
-				$("#result").val("DayWords err:" + o.msg + "--" + new Date());
+				showErr("DayWords err:" + o.msg + "--" + new Date());
 			}
 		},"json");
     }

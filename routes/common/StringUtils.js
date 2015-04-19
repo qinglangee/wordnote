@@ -12,11 +12,18 @@
         if (!(this instanceof _)) return new _(obj);
         this._wrapped = obj;
     };
-    
+
+    // 常量
+    _.NL = '\n';   // 新行, new line
+
+
+    // 函数
+
+    // 空串判断
     _.isEmpty = function(str){
         return (str === null || str === "");
     }
-    
+
     _.trim = function(str){ //删除左右两端的空格
         if(str == null)
             return str;
@@ -41,8 +48,8 @@
         if (typeof module !== 'undefined' && module.exports) {
             exports = module.exports = _;
         }
-        exports.CommonUtils = _;
+        exports.StringUtils = _;
     } else {
-        root.CommonUtils = _;
+        root.StringUtils = _;
     }
 }).call(this);
