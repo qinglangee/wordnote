@@ -1,13 +1,20 @@
 {
-  "name": "wordnote",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "/home/lifeix/local/bin/node app.js"
-  },
-  "dependencies": {
-    "express": "4.11.2",
-    "ejs": "*",
-    "stylus": "*"
-  }
+    "name": "wordnote",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "/home/lifeix/local/bin/node app.js"
+    },
+    "dependencies": {
+        "express": "*",
+        "serve-favicon": "*",
+        "express-logger": "*",
+        "body-parser": "*",
+        "multer": "*",
+        "method-override": "*",
+        "errorhandler": "*",
+
+        "ejs": "*",
+        "stylus": "*"
+    }
 }

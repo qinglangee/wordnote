@@ -2,14 +2,24 @@
  * Module dependencies.
  */
 
-var express = require('express'), 
-	routes = require('./routes/index'), 
-	http = require('http'), 
-	path = require('path'), 
-	user = require('./routes/user/user'), 
-	word = require('./routes/word/word'), 
+var express = require('express'),
+    favicon = require('serve-favicon'),
+    logger = require('express-logger');
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override'),
+    errorhandler = require('errorhandler'),
+	// http = require('http'),  // 4.x 不再需要
+    multer = require('multer');
+	path = require('path');
+
+var
+	routes = require('./routes/index'),
+	user = require('./routes/user/user'),
+	word = require('./routes/word/word'),
 	note = require('./routes/note/note'),
 	temp = require('./routes/word/word_temp.js');
+
+
 
 var app = express();
 
@@ -17,13 +27,21 @@ var app = express();
 app.set('port', process.env.PORT || 6024);
 app.set('views', __dirname + '/views');
 //app.set('view engine', 'ejs');
-app.engine('.html', require('ejs').renderFile);  
-app.set('view engine', 'html'); 
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
+app.engine('.html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.use(favicon("favicon.ico"));
+app.use(logger({path: "./logoutput/catalina.out"}));
+//app.use(bodyParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(methodOverride());
+
+
+//app.use(app.router);  // 4.x 不再需要了
+
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 //静态文件目录
@@ -31,8 +49,12 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // development only
 if ('development' == app.get('env')) {
-	app.use(express.errorHandler());
+	app.use(errorhandler());
 }
+
+
+
+
 
 app.get('/', routes.index);
 
@@ -50,6 +72,8 @@ app.get('/temp/view', temp.view);
 app.post('/temp/save', temp.save);
 app.post('/temp/saveDayWords', temp.saveDayWords);
 
-http.createServer(app).listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'));
+
+
+app.listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
 });
