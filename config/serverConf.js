@@ -1,14 +1,17 @@
-var base = "/home/zhch/document/wordnote/";
-//var base = "d:\\temp\\node_js_wordnote\\";
+//var base = "/home/zhch/document/wordnote/";
+var base = "d:\\temp\\node_js_wordnote\\";
 var wordnote ={
-    logDir:base + "logs"
+    logDir:base + "logs",
+    logFile:"/notes.log",
+    dbDir:base + "database/",
+    dbFile: "wordnote.db"
 };
 
 var tempdir = {
-    log: base + "notes.log",
     store:base + "notes_store.js",
-    words:base + "daywords/",
+    wordsDir:base + "daywords/",
 
 }
 exports.wordnote=wordnote;
 exports.tempdir=tempdir;
+exports.base=base;

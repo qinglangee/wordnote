@@ -16,7 +16,7 @@
     var jsdom = require('jsdom');
     var $ = require('jquery')(jsdom.jsdom().parentWindow);
     var http = require('http');
-    var St = require('../common/StringUtils');
+    var St = require('../common/string_utils');
 
     _.search = function(searchText, callback){
 

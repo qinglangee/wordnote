@@ -72,6 +72,9 @@ app.get('/temp/view', temp.view);
 app.post('/temp/save', temp.save);
 app.post('/temp/saveDayWords', temp.saveDayWords);
 
+// init dirs
+var init = require('./routes/base/init');
+init.initApp();
 
 
 app.listen(app.get('port'), function(){

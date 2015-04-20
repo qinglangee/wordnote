@@ -3,42 +3,23 @@
  * GET home page.
  */
 var fs = require('fs');
-var St = require('../common/StringUtils');
+var St = require('../common/string_utils');
 var dict = require('./dict');
 var serverConfig = require('../../config/serverConf');
+var respFunc = require('../common/response_functions')
 
 var NL = St.NL;
 
 var storeFile = serverConfig.tempdir.store;
 var logFile = serverConfig.tempdir.log;
 
-var dayWordsDir = serverConfig.tempdir.words;
+var dayWordsDir = serverConfig.tempdir.wordsDir;
 
-function success(){
-    return {"err":0, "msg":"ok"};
-}
-function failed(msg, errCode){
-    var err = errCode == null ? 1 : errCode;
-    return {"err":err, "msg":msg};
-}
+var success = respFunc.success;
+var failed = respFunc.failed;
 
 // 写日志
-function writeLog(content, ip, callback){
-    try{
-        var logContent = '';
-        logContent += ip + " -- new content: =========================" + new Date() + NL;
-        logContent += content + NL;
-        fs.appendFile(logFile, logContent, function (err) {
-            if (err){
-                console.error('Can\'t save logFile - content:' + logContent);
-            }
-            callback(0);
-        });
-    }catch (e){//Catch exception if any
-        console.error('Exception:' + e + '\n' + 'Can\'t save logFile - content:' + logContent);
-        callback(1);
-    }
-}
+var writeLog = respFunc.writeLog;
 
 // 保存每日学习记录
 exports.save = function(req, res){
@@ -129,6 +110,7 @@ exports.saveDayWords = function(req, res){
         }
     }
 
+    // 查单词后的回调函数
     var searchCallback = function(word){
         console.log(word);
         fs.writeFile(contentFile, JSON.stringify(word), function (err) {
