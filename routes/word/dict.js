@@ -58,6 +58,8 @@
                 for(var i = 0; i < transText.length; i++){
                     translate[translate.length] = St.trim($(transText[i]).text());
                 }
+
+                // word 数据结构
                 var word = {"text":text, "pronounce":pronounce, "translate":translate};
                 if($.isFunction(callback)){
                     callback(word);

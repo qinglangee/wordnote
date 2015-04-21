@@ -1,7 +1,4 @@
 
-/*
- * GET home page.
- */
 var fs = require('fs');
 var SC = require('../../config/serverConf');
 var sqlite3 = require('sqlite3').verbose();
@@ -47,14 +44,24 @@ function initDir(){
     confirmDir(tempdir.wordsDir);
 }
 
-// 初始化数据库
-function initDatabase(){
-    var dbFile = SC.wordnote.dbDir + SC.wordnote.dbFile;
-    var db = new sqlite3.Database(dbFile);
-}
 
 // 初始化目录
 exports.initApp = function(){
     initDir();
-    initDatabase();
 };
+
+///////// 下面是单独执行的 //////////////////////////////////////////////////
+
+var table_words = "CREATE TABLE words (name TEXT, translate TEXT)";
+// 初始化数据库
+function initDatabase(){
+    var dbFile = SC.wordnote.dbDir + SC.wordnote.dbFile;
+    var db = new sqlite3.Database(dbFile);
+    db.serialize(function() {
+        db.run(table_words);
+	});
+
+	db.close();
+}
+
+// initDatabase();

@@ -6,7 +6,9 @@ var fs = require('fs');
 var St = require('../common/string_utils');
 var dict = require('./dict');
 var serverConfig = require('../../config/serverConf');
-var respFunc = require('../common/response_functions')
+var respFunc = require('../common/response_functions');
+var dao = require('./word_dao');
+var Log = require('../common/log_utils');
 
 var NL = St.NL;
 
@@ -20,6 +22,22 @@ var failed = respFunc.failed;
 
 // 写日志
 var writeLog = respFunc.writeLog;
+
+function searchAndSaveTranslate(text){
+    // 数据库里查一下， 没有的就插入
+    dao.getWord(text, function(dbWord){
+        if(dbWord == null){
+            dict.search(text, function(word){
+                dao.saveWord(word, function(err){
+                    if(err)
+                        Log.e(err);
+                    else
+                        Log.i("插入一条单词： " + text);
+                });
+            });
+        }
+    });
+}
 
 // 保存每日学习记录
 exports.save = function(req, res){
@@ -110,24 +128,20 @@ exports.saveDayWords = function(req, res){
         }
     }
 
-    // 查单词后的回调函数
-    var searchCallback = function(word){
-        console.log(word);
-        fs.writeFile(contentFile, JSON.stringify(word), function (err) {
-            if (err){
-                console.error('qwqwqwqwqwqwqw:' + content);
-                console.error(err);
-                res.send(failed("保存单词出错了。"));
-                return;
-            }
-        });
-    }
 
     var logCallback = function(err){
         if(err > 0){
             res.send(failed("写日志出错了"));
         }else{
             res.send(success());
+        }
+    }
+
+    var onlyWords = [];
+    // 把words中的日期去掉，保存到onlyWords中
+    for(var i=0; i < words.length; i++){
+        if(!/^\d+$/.test(words[i])){
+            onlyWords[onlyWords.length] = words[i];
         }
     }
 
@@ -138,7 +152,11 @@ exports.saveDayWords = function(req, res){
 			res.send(failed("保存单词出错了。"));
             return;
 		}
-        dict.search("hot", searchCallback);
 		writeLog(content, ip, logCallback);
+
+        for(var i=0; i<onlyWords.length; i++){
+            var text = onlyWords[i];
+            searchAndSaveTranslate(text);
+        }
 	});
 }
