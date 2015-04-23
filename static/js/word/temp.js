@@ -86,14 +86,16 @@ require(['jquery', 'moment'],function($, moment){
 		var lastDay = moment(records[records.length-1].time).add(25, "d");
 		var result = "";
 		var showOld = $("#showOld").prop("checked");
+        var today = currDay;
 		while(currDay.diff(lastDay, 'days') < 2){
-			if(!showOld && (currDay.diff(moment(), 'days') < 0)){
+			if(!showOld && (currDay.diff(moment(), 'days') < 0)){ // 判断是否显示今天之前的
 				currDay.add(1, "d");
 				continue;
 			}
 			var day = currDay.format('YYYY-MM-DD');
 			result += day;
-			var reviews = resultMap[day];
+
+			var reviews = resultMap[day]; // 当天的复习列表
 			for(rec in reviews){
 				result += "   " + reviews[rec].name;
 			}
@@ -122,9 +124,33 @@ require(['jquery', 'moment'],function($, moment){
 			}
 		},"json");
     }
+
+    // 计算结果后，请求要背的所有单词
+    function calculateAndGetWords(){
+        calculate();
+        var today = moment().format('YYYY-MM-DD'); // 当天的日期
+        var todayWords = resultMap[today];
+        var days = "";
+        for(var i=0;i<todayWords.length; i++){
+            if(i>0)
+                days += '|';
+            days += todayWords[i].name;
+        }
+
+//         console.log(days);
+
+		var url = "/temp/review_words";
+        $.get(url,{"days":days},function(o){
+			if(o.err===0){
+				$("#note_content").val(JSON.stringify(o.content));
+            }else{
+                showErr(o.msg);
+            }
+		},"json");
+    }
 	getText();
 	$("#flush_btn").on('click', getText);
 	$("#submit_btn").on('click', submitText);
-	$("#calculate").on('click', calculate);
+	$("#calculate").on('click', calculateAndGetWords);
 	$("#day_words_post").on('click', postDayWord);
 });

@@ -7,6 +7,7 @@ var dict = require('./dict');
 
 var dbFile = SC.wordnote.dbDir + SC.wordnote.dbFile;
 var db = new sqlite3.Database(dbFile);
+var StringUtil = require('../common/string_utils');
 
 /** 保存单词 */
 exports.saveWord = function(word,cb){
@@ -32,6 +33,26 @@ exports.getWord = function(text, cb){
     });
 }
 
+/** 批量查找单词 */
+exports.getWords = function(wordsText, cb){
+    var inStr = StringUtil.joinSql(wordsText);
+    Log.d(inStr);
+    db.serialize(function() {
+        var words = [];
+        db.all("SELECT translate FROM words WHERE name in ("+inStr+")", function(err, rows) {
+            if(err){
+                Log.e(err)
+                cb({});
+                return;
+            }
+            for(var i=0; i<rows.length; i++){
+	            words[words.length] = JSON.parse(rows[i].translate);
+            }
+            cb(words);
+        });
+    });
+}
+
 // dict.search("good", function(word){
 //    exports.saveWord(word);
 // })
@@ -40,6 +61,4 @@ exports.getWord = function(text, cb){
 //     Log.d(word.translate);
 // });
 
-db.each("SELECT translate FROM words",function(err, row){
-    Log.i(row.translate);
-});
+

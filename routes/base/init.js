@@ -52,7 +52,7 @@ exports.initApp = function(){
 
 ///////// 下面是单独执行的 //////////////////////////////////////////////////
 
-var table_words = "CREATE TABLE words (name TEXT, translate TEXT)";
+var table_words = "CREATE TABLE words (name TEXT UNIQUE, translate TEXT)";
 // 初始化数据库
 function initDatabase(){
     var dbFile = SC.wordnote.dbDir + SC.wordnote.dbFile;
