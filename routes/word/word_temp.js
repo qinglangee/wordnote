@@ -10,6 +10,8 @@ var respFunc = require('../common/response_functions');
 var dao = require('./word_dao');
 var Log = require('../common/log_utils');
 var url = require("url");
+var Promise = require('promise');
+
 
 var NL = St.NL;
 
@@ -164,24 +166,18 @@ exports.saveDayWords = function(req, res){
 
 // 返回所有要背的单词
 exports.review_words = function(req, res){
-    var daysStr = url.parse(req.url,true).query.days;
-    var days = daysStr.split("|");
-    var allWords = [];
-    for(var i=0; i<days.length; i++){
-        var  wordsFile = dayWordsDir + days[i];
-        var fileContent = fs.readFileSync(wordsFile, {"encoding":"utf-8"});
-        var words = fileContent.split('\n');
-
-//         for(var j=0;i<words.length; j++){
-//             allWords[allWords.length] = words[j].split('|')[1];
-//         }
-        allWords = allWords.concat(words);
-    }
+    var dayStr = url.parse(req.url,true).query.days;
+    var wordsFile = dayWordsDir + dayStr;
+    var fileContent = fs.readFileSync(wordsFile, {"encoding":"utf-8"});
+    var words = fileContent.split('\n');
 
 
-    dao.getWords(allWords, function(dbWords){
+    dao.getWords(words).done(function(dbWords){
         var result = success();
         result.content = dbWords;
         res.send(result);
+    },function(err){
+        Log.e(err);
+        res.send(failed("取数据出错。"));
     });
 }

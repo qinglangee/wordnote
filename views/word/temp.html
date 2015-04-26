@@ -12,21 +12,44 @@
 </style>
 </head>
 <body>
-
-	content:
-	<br>
-	<textarea id="note_content" class="content"></textarea>
-	<textarea id="schedule" class="content editcontent"></textarea>
-	<br>
-	<input id="flush_btn" type="button"  value="更新" class="big_btn"/>---
-	<input type="button" id="submit_btn" value="提交" class="big_btn"/>---
-	<input type="button" id="calculate" value="重新计算" class="big_btn"/>---
-	<input type="button" id="day_words_post" value="提交单词" class="big_btn"/>
-	<br>
-	<input id="result" class="result"/>
-	<br>
-	<input type="checkbox" id="showOld" />
-	<label for="showOld">显示旧数据</label>
+    <div id="tabs">
+        <a class="tab-link" data-for="home" href="javascript:void(0)">home</a>&nbsp;&nbsp;&nbsp;
+        <a class="tab-link" data-for="recall" href="javascript:void(0)">recall</a>&nbsp;&nbsp;&nbsp;
+    </div>
+    <div id="home" class="content-tab">
+        content:
+        <br>
+        <textarea id="note_content" class="content"></textarea>
+        <textarea id="schedule" class="content editcontent"></textarea>
+        <br>
+        <input id="flush_btn" type="button"  value="更新" class="big_btn"/>---
+        <input type="button" id="submit_btn" value="提交" class="big_btn"/>---
+        <input type="button" id="calculate" value="重新计算" class="big_btn"/>---
+        <input type="button" id="day_words_post" value="提交单词" class="big_btn"/>
+        <br>
+        <input id="result" class="result"/>
+        <br>
+        <input type="checkbox" id="showOld" />
+        <label for="showOld">显示旧数据</label>
+    </div>
+    <div id="recall" class="content-tab">
+        复习：<br>
+        <div id="ready_days"></div>
+        <div>
+            <span id="summary"></span><br>
+            总共要背<span id="totalWords"></span>个，
+            背完了的<span id="passedWords"></span>个，
+            没记住的<span id="forgetWords"></span>个，
+            没复习的<span id="restWords"></span>个
+        </div>
+        <div id="wordBox"></div>
+        <div id="pronounceBox"></div>
+        <div id="translateBox"></div>
+        <input type="button" id="nextWord" value="下一个" class="big_btn"/>
+        <input type="button" id="showTranslate" value="显示释义" class="big_btn"/>
+        <input type="button" id="forget" value="不记得" class="big_btn"/>
+        <input type="button" id="pass" value="已复习" class="big_btn"/>
+    </div>
 
 </body>
 <script type="text/javascript" data-main="../static/js/word/temp.js" src="../static/js/require.js" ></script>

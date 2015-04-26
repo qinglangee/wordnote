@@ -16,6 +16,9 @@ var dayWordsDir = serverConfig.tempdir.words;
 exports.success = function(){
     return {"err":0, "msg":"ok"};
 }
+/*
+ * useage  res.send(failed("Date error");
+*/
 exports.failed = function(msg, errCode){
     var err = errCode == null ? 1 : errCode;
     return {"err":err, "msg":msg};

@@ -4,7 +4,7 @@ require.config({
         "jquery": "../jquery/jquery-2.1.0.min"
     }
 });
-require(['jquery', 'moment'],function($, moment){
+require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, storage){
     function showInfo(msg){
         $("#result").removeClass("error_res");
 		$("#result").val(msg);
@@ -125,32 +125,134 @@ require(['jquery', 'moment'],function($, moment){
 		},"json");
     }
 
+    var wordsToRecite = [];
+    var Review = {};
     // 计算结果后，请求要背的所有单词
     function calculateAndGetWords(){
+        wordsToRecite = [];
+        Review.total = 0;
+        Review.passed = 0;
+        Review.rest = 0;
+        Review.forgetWords = {};
+        Review.forget = 0;
+        showReview();
+
         calculate();
         var today = moment().format('YYYY-MM-DD'); // 当天的日期
         var todayWords = resultMap[today];
-        var days = "";
-        for(var i=0;i<todayWords.length; i++){
-            if(i>0)
-                days += '|';
-            days += todayWords[i].name;
+		var url = "/temp/review_words";
+
+        var localedDays = 0;
+        var wordsReady = function(day, dayWords){
+            localedDays++;
+            concat(wordsToRecite, dayWords);
+            $("#ready_days").html("ready days:" + localedDays);
+
+            var html = $("#summary").html() + "--" + day + ":" + dayWords.length;
+            Review.total += dayWords.length;
+            Review.rest += dayWords.length;
+            $("#summary").html(html);
+
         }
 
-//         console.log(days);
-
-		var url = "/temp/review_words";
-        $.get(url,{"days":days},function(o){
-			if(o.err===0){
-				$("#note_content").val(JSON.stringify(o.content));
+        var getDayWords = function(days){
+            var dayWords = storage.get(days);
+            if(dayWords != null){
+                wordsReady(days, dayWords);
             }else{
-                showErr(o.msg);
+                $.get(url,{"days":days},function(o){
+                    if(o.err===0){
+                        storage.set(days, o.content);
+                        wordsReady(days, o.content);
+                    }else{
+                        showErr(o.msg);
+                    }
+                },"json");
             }
-		},"json");
+        }
+        $("#summary").html(""); // 先清空内容
+
+        for(var i=0;i<todayWords.length; i++){
+            var days = todayWords[i].name;
+            getDayWords(days);
+        }
+
+
     }
+    // tab 切换
+    function changeTab(){
+        var tabId = $(this).attr("data-for");
+        $(".content-tab").hide();
+        $("#"+ tabId).show();
+    }
+
+    // 显示下一个
+    var showIndex = -1;
+    var showWord;
+    var Review = {};
+    function showNextWord(){
+        showIndex = Math.floor(Math.random() * wordsToRecite.length);
+        showWord = wordsToRecite[showIndex];
+        $("#wordBox").html(showWord.text);
+    }
+    // 显示释义
+    function showTranslate(){
+        var html = "";
+
+        var pronounce = showWord.pronounce;
+        for(var i = 0; i < pronounce.length;i++){
+            html += pronounce[i].name + "--" + pronounce[i].text + "<br>";
+        }
+        $("#pronounceBox").html(html);
+
+        html = "";
+        var trans = showWord.translate;
+        for(var i = 0; i < trans.length;i++){
+            html += trans[i] + "<br>";
+        }
+        $("#translateBox").html(html);
+    }
+
+    // 不记得这个
+    function forget(){
+        Review.forgetWords[showWord.text] = 1;
+        Review.forget ++;
+        showReview();
+    }
+
+    // pass这个
+    function pass(){
+        Review.rest--;
+        Review.passed++;
+        showNextWord();
+        showReview();
+    }
+
+    // 更新Review显示
+    function showReview(){
+        $("#totalWords").html(Review.total);
+        $("#passedWords").html(Review.passed);
+        $("#forgetWords").html(Review.forget);
+        $("#restWords").html(Review.rest);
+    }
+    function concat(arr1, arr2){
+        if(arr2 == null || arr2.length == 0){
+            return;
+        }
+        for(var i=0; i<arr2.length;i++){
+            arr1[arr1.length] = arr2[i];
+        }
+    }
+
 	getText();
 	$("#flush_btn").on('click', getText);
 	$("#submit_btn").on('click', submitText);
 	$("#calculate").on('click', calculateAndGetWords);
 	$("#day_words_post").on('click', postDayWord);
+    $(".tab-link").on('mousemove', changeTab);
+    $(".tab-link").on('click', changeTab);
+    $("#nextWord").on('click', showNextWord);
+    $("#showTranslate").on('click', showTranslate);
+    $("#forget").on('click', forget);
+    $("#pass").on('click', pass);
 });

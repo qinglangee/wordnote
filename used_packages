@@ -1,45 +1,235 @@
 
-> contextify@0.1.13 install /home/lifeix/temp/github/wordnote/node_modules/jsdom/node_modules/contextify
+> contextify@0.1.13 install D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify
 > node-gyp rebuild
 
-make: Entering directory `/home/lifeix/temp/github/wordnote/node_modules/jsdom/node_modules/contextify/build'
-  CXX(target) Release/obj.target/contextify/src/contextify.o
-  SOLINK_MODULE(target) Release/obj.target/contextify.node
-  SOLINK_MODULE(target) Release/obj.target/contextify.node: Finished
-  COPY Release/contextify.node
-make: Leaving directory `/home/lifeix/temp/github/wordnote/node_modules/jsdom/node_modules/contextify/build'
-ejs@2.3.1 node_modules/ejs
 
-jquery@2.1.3 node_modules/jquery
+D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify>node "D:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin\\..\..\node_modules\node-gyp\bin\node-gyp.js" rebuild 
+Building the projects in this solution one at a time. To enable parallel build, please add the "/m" switch.
+  contextify.cc
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(179): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\contextify.vcxproj]
+          with
+          [
+              T=v8::Object
+          ]
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(179): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\contextify.vcxproj]
+          with
+          [
+              T=v8::FunctionTemplate
+          ]
+     Creating library D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\Release\contextify.lib and object D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\Release\contextify.exp
+  Generating code
+  Finished generating code
+  contextify.vcxproj -> D:\temp\github\wordnote\node_modules\jsdom\node_modules\contextify\build\Release\\contextify.node
 
-method-override@2.3.2 node_modules/method-override
+> sqlite3@3.0.5 install D:\temp\github\wordnote\node_modules\sqlite3
+> node-pre-gyp install --fallback-to-build
+
+
+D:\temp\github\wordnote\node_modules\sqlite3>node "D:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin\\..\..\node_modules\node-gyp\bin\node-gyp.js" rebuild --name=sqlite3 --configuration=Release --module_name=node_sqlite3 --version=3.0.5 --major=3 --patch=5 --runtime=node --node_abi=node-v11 --platform=win32 --target_platform=win32 --arch=x64 --target_arch=x64 --module_main=./lib/sqlite3 --host=https://mapbox-node-binary.s3.amazonaws.com/ --module_path=D:\temp\github\wordnote\node_modules\sqlite3\lib\binding\node-v11-win32-x64 --module=D:\temp\github\wordnote\node_modules\sqlite3\lib\binding\node-v11-win32-x64\node_sqlite3.node --remote_path=./sqlite3/v3.0.5/ --package_name=node-v11-win32-x64.tar.gz --staged_tarball=build\stage\sqlite3\v3.0.5\node-v11-win32-x64.tar.gz --hosted_path=https://mapbox-node-binary.s3.amazonaws.com/sqlite3/v3.0.5/ --hosted_tarball=https://mapbox-node-binary.s3.amazonaws.com/sqlite3/v3.0.5/node-v11-win32-x64.tar.gz 
+Building the projects in this solution one at a time. To enable parallel build, please add the "/m" switch.
+  unpack_sqlite_dep
+  sqlite3.c
+  sqlite3.vcxproj -> D:\temp\github\wordnote\node_modules\sqlite3\build\Release\\sqlite3.lib
+  database.cc
+  node_sqlite3.cc
+  statement.cc
+..\src\statement.cc(139): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+..\src\statement.cc(278): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+..\src\statement.cc(287): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+d:\temp\github\wordnote\node_modules\sqlite3\src\async.h(38): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          d:\temp\github\wordnote\node_modules\sqlite3\src\async.h(32) : while compiling class template member function 'void Async<Item,Parent>::listener(uv_async_t *,int)'
+          with
+          [
+              Item=std::string,
+              Parent=node_sqlite3::Database
+          ]
+          ..\src\database.cc(376) : see reference to class template instantiation 'Async<Item,Parent>' being compiled
+          with
+          [
+              Item=std::string,
+              Parent=node_sqlite3::Database
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\src\async.h(38): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          d:\temp\github\wordnote\node_modules\sqlite3\src\async.h(32) : while compiling class template member function 'void Async<Item,Parent>::listener(uv_async_t *,int)'
+          with
+          [
+              Item=node_sqlite3::Database::ProfileInfo,
+              Parent=node_sqlite3::Database
+          ]
+          ..\src\database.cc(413) : see reference to class template instantiation 'Async<Item,Parent>' being compiled
+          with
+          [
+              Item=node_sqlite3::Database::ProfileInfo,
+              Parent=node_sqlite3::Database
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\src\async.h(38): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          d:\temp\github\wordnote\node_modules\sqlite3\src\async.h(32) : while compiling class template member function 'void Async<Item,Parent>::listener(uv_async_t *,int)'
+          with
+          [
+              Item=node_sqlite3::Database::UpdateInfo,
+              Parent=node_sqlite3::Database
+          ]
+          ..\src\database.cc(453) : see reference to class template instantiation 'Async<Item,Parent>' being compiled
+          with
+          [
+              Item=node_sqlite3::Database::UpdateInfo,
+              Parent=node_sqlite3::Database
+          ]
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(184): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          with
+          [
+              T=v8::Object
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\node_modules\nan\nan_new.h(209): warning C4244: 'argument' : conversion from 'sqlite3_int64' to 'double', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          ..\src\statement.cc(480) : see reference to function template instantiation 'v8::Local<T> NanNew<v8::Number,sqlite3_int64>(A0)' being compiled
+          with
+          [
+              T=v8::Number,
+              A0=sqlite3_int64
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\node_modules\nan\nan_new.h(209): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          ..\src\statement.cc(548) : see reference to function template instantiation 'v8::Local<T> NanNew<v8::Array,unsigned __int64>(A0)' being compiled
+          with
+          [
+              T=v8::Array,
+              A0=unsigned __int64
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\node_modules\nan\nan_new.h(215): warning C4267: 'argument' : conversion from 'size_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          ..\src\statement.cc(769) : see reference to function template instantiation 'v8::Local<T> NanNew<v8::String,const _Elem*,unsigned __int64>(A0,A1)' being compiled
+          with
+          [
+              T=v8::String,
+              _Elem=char,
+              A0=const char *,
+              A1=unsigned __int64
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\src\statement.h(55): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          ..\src\statement.cc(808) : see reference to function template instantiation 'node_sqlite3::Values::Blob::Blob<const char*>(T,size_t,const void *)' being compiled
+          with
+          [
+              T=const char *
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\node_modules\nan\nan_new.h(209): warning C4244: 'argument' : conversion from 'sqlite3_int64' to 'double', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          ..\src\database.cc(485) : see reference to function template instantiation 'v8::Local<T> NanNew<v8::Number,sqlite3_int64>(A0)' being compiled
+          with
+          [
+              T=v8::Number,
+              A0=sqlite3_int64
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\src\statement.h(55): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          ..\src\statement.cc(189) : see reference to function template instantiation 'node_sqlite3::Values::Blob::Blob<T>(T,size_t,const void *)' being compiled
+          with
+          [
+              T=int
+          ]
+          ..\src\statement.cc(217) : see reference to function template instantiation 'node_sqlite3::Values::Field *node_sqlite3::Statement::BindParameter<int>(const v8::Handle<T>,int)' being compiled
+          with
+          [
+              T=v8::Value
+          ]
+          ..\src\statement.cc(313) : see reference to function template instantiation 'T *node_sqlite3::Statement::Bind<node_sqlite3::Statement::Baton>(const v8::Arguments &,int,int)' being compiled
+          with
+          [
+              T=node_sqlite3::Statement::Baton
+          ]
+d:\temp\github\wordnote\node_modules\sqlite3\src\statement.h(55): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          ..\src\statement.cc(189) : see reference to function template instantiation 'node_sqlite3::Values::Blob::Blob<T>(T,size_t,const void *)' being compiled
+          with
+          [
+              T=char *
+          ]
+          ..\src\statement.cc(240) : see reference to function template instantiation 'node_sqlite3::Values::Field *node_sqlite3::Statement::BindParameter<char*>(const v8::Handle<T>,char)' being compiled
+          with
+          [
+              T=v8::Value
+          ]
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(184): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          with
+          [
+              T=v8::Object
+          ]
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(184): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          with
+          [
+              T=v8::FunctionTemplate
+          ]
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(184): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          with
+          [
+              T=v8::Object
+          ]
+C:\Users\Administrator\.node-gyp\0.10.24\deps\v8\include\v8.h(184): warning C4506: no definition for inline function 'v8::Persistent<T> v8::Persistent<T>::New(v8::Handle<T>)' [D:\temp\github\wordnote\node_modules\sqlite3\build\node_sqlite3.vcxproj]
+          with
+          [
+              T=v8::FunctionTemplate
+          ]
+     Creating library D:\temp\github\wordnote\node_modules\sqlite3\build\Release\node_sqlite3.lib and object D:\temp\github\wordnote\node_modules\sqlite3\build\Release\node_sqlite3.exp
+  Generating code
+  Finished generating code
+  node_sqlite3.vcxproj -> D:\temp\github\wordnote\node_modules\sqlite3\build\Release\\node_sqlite3.node
+  Copying D:\temp\github\wordnote\node_modules\sqlite3\build\Release\/node_sqlite3.node to D:/temp/github/wordnote/node_modules/sqlite3/lib/binding/node-v11-win32-x64\node_sqlite3.node
+  �Ѹ���         1 ���ļ���
+ejs@2.3.1 node_modules\ejs
+
+method-override@2.3.2 node_modules\method-override
 ├── methods@1.1.1
-├── vary@1.0.0
 ├── parseurl@1.3.0
+├── vary@1.0.0
 └── debug@2.1.3 (ms@0.7.0)
 
-serve-favicon@2.2.0 node_modules/serve-favicon
-├── ms@0.7.0
-├── fresh@0.2.4
+jquery@2.1.3 node_modules\jquery
+
+serve-favicon@2.2.0 node_modules\serve-favicon
 ├── parseurl@1.3.0
+├── fresh@0.2.4
+├── ms@0.7.0
 └── etag@1.5.1 (crc@3.2.1)
 
-errorhandler@1.3.5 node_modules/errorhandler
+promise@7.0.1 node_modules\promise
+└── asap@2.0.3
+
+errorhandler@1.3.5 node_modules\errorhandler
 ├── escape-html@1.0.1
 └── accepts@1.2.5 (negotiator@0.5.1, mime-types@2.0.10)
 
-body-parser@1.12.3 node_modules/body-parser
+body-parser@1.12.3 node_modules\body-parser
 ├── content-type@1.0.1
-├── bytes@1.0.0
 ├── raw-body@1.3.4
+├── bytes@1.0.0
 ├── depd@1.0.1
 ├── qs@2.4.1
 ├── debug@2.1.3 (ms@0.7.0)
+├── on-finished@2.2.1 (ee-first@1.1.0)
 ├── iconv-lite@0.4.8
-├── on-finished@2.2.0 (ee-first@1.1.0)
 └── type-is@1.6.1 (media-typer@0.3.0, mime-types@2.0.10)
 
-stylus@0.50.0 node_modules/stylus
+express@4.12.3 node_modules\express
+├── merge-descriptors@1.0.0
+├── cookie@0.1.2
+├── utils-merge@1.0.0
+├── fresh@0.2.4
+├── cookie-signature@1.0.6
+├── escape-html@1.0.1
+├── methods@1.1.1
+├── range-parser@1.0.2
+├── vary@1.0.0
+├── content-type@1.0.1
+├── parseurl@1.3.0
+├── content-disposition@0.5.0
+├── finalhandler@0.3.4
+├── serve-static@1.9.2
+├── path-to-regexp@0.1.3
+├── depd@1.0.1
+├── on-finished@2.2.1 (ee-first@1.1.0)
+├── etag@1.5.1 (crc@3.2.1)
+├── debug@2.1.3 (ms@0.7.0)
+├── qs@2.4.1
+├── proxy-addr@1.0.7 (forwarded@0.1.0, ipaddr.js@0.1.9)
+├── accepts@1.2.5 (negotiator@0.5.1, mime-types@2.0.10)
+├── type-is@1.6.1 (media-typer@0.3.0, mime-types@2.0.10)
+└── send@0.12.2 (destroy@1.0.3, ms@0.7.0, mime@1.3.4)
+
+stylus@0.51.0 node_modules\stylus
 ├── css-parse@1.7.0
 ├── mkdirp@0.3.5
 ├── debug@2.1.3 (ms@0.7.0)
@@ -47,39 +237,18 @@ stylus@0.50.0 node_modules/stylus
 ├── source-map@0.1.43 (amdefine@0.1.0)
 └── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
 
-multer@0.1.8 node_modules/multer
+multer@0.1.8 node_modules\multer
 ├── qs@1.2.2
 ├── mkdirp@0.3.5
 ├── type-is@1.5.7 (media-typer@0.3.0, mime-types@2.0.10)
 └── busboy@0.2.9 (readable-stream@1.1.13, dicer@0.2.3)
 
-express@4.12.3 node_modules/express
-├── merge-descriptors@1.0.0
-├── utils-merge@1.0.0
-├── cookie-signature@1.0.6
-├── methods@1.1.1
-├── cookie@0.1.2
-├── fresh@0.2.4
-├── escape-html@1.0.1
-├── range-parser@1.0.2
-├── content-type@1.0.1
-├── vary@1.0.0
-├── finalhandler@0.3.4
-├── parseurl@1.3.0
-├── serve-static@1.9.2
-├── content-disposition@0.5.0
-├── path-to-regexp@0.1.3
-├── depd@1.0.1
-├── qs@2.4.1
-├── debug@2.1.3 (ms@0.7.0)
-├── on-finished@2.2.0 (ee-first@1.1.0)
-├── send@0.12.2 (destroy@1.0.3, ms@0.7.0, mime@1.3.4)
-├── proxy-addr@1.0.7 (forwarded@0.1.0, ipaddr.js@0.1.9)
-├── etag@1.5.1 (crc@3.2.1)
-├── type-is@1.6.1 (media-typer@0.3.0, mime-types@2.0.10)
-└── accepts@1.2.5 (negotiator@0.5.1, mime-types@2.0.10)
+express-logger@0.0.3 node_modules\express-logger
+├── mkdir@0.0.2
+├── express@2.5.9 (mime@1.2.4, qs@0.4.2, mkdirp@0.3.0, connect@1.9.2)
+└── datetime@0.0.3 (vows@0.8.1)
 
-jsdom@3.1.2 node_modules/jsdom
+jsdom@3.1.2 node_modules\jsdom
 ├── xmlhttprequest@1.7.0
 ├── xml-name-validator@1.0.0
 ├── browser-request@0.3.3
@@ -87,14 +256,12 @@ jsdom@3.1.2 node_modules/jsdom
 ├── nwmatcher@1.3.4
 ├── parse5@1.4.2
 ├── acorn-globals@1.0.4 (acorn@1.0.3)
-├── contextify@0.1.13 (bindings@1.2.1, nan@1.5.3)
-├── htmlparser2@3.8.2 (domelementtype@1.3.0, entities@1.0.0, domhandler@2.3.0, readable-stream@1.1.13, domutils@1.5.1)
-├── escodegen@1.6.1 (esutils@1.1.6, estraverse@1.9.3, source-map@0.1.43, optionator@0.5.0, esprima@1.2.5)
-├── cssstyle@0.2.23
 ├── acorn@0.11.0
-└── request@2.55.0 (caseless@0.9.0, json-stringify-safe@5.0.0, aws-sign2@0.5.0, forever-agent@0.6.1, stringstream@0.0.4, oauth-sign@0.6.0, tunnel-agent@0.4.0, isstream@0.1.2, node-uuid@1.4.3, qs@2.4.1, combined-stream@0.0.7, form-data@0.2.0, bl@0.9.4, mime-types@2.0.10, tough-cookie@0.12.1, http-signature@0.10.1, hawk@2.3.1, har-validator@1.6.1)
+├── escodegen@1.6.1 (esutils@1.1.6, estraverse@1.9.3, esprima@1.2.5, optionator@0.5.0, source-map@0.1.43)
+├── htmlparser2@3.8.2 (domelementtype@1.3.0, entities@1.0.0, domhandler@2.3.0, readable-stream@1.1.13, domutils@1.5.1)
+├── cssstyle@0.2.24
+├── request@2.55.0 (caseless@0.9.0, oauth-sign@0.6.0, forever-agent@0.6.1, isstream@0.1.2, qs@2.4.1, aws-sign2@0.5.0, json-stringify-safe@5.0.0, stringstream@0.0.4, tunnel-agent@0.4.0, node-uuid@1.4.3, mime-types@2.0.10, combined-stream@0.0.7, bl@0.9.4, tough-cookie@0.13.0, http-signature@0.10.1, form-data@0.2.0, hawk@2.3.1, har-validator@1.6.1)
+└── contextify@0.1.13 (bindings@1.2.1, nan@1.5.3)
 
-express-logger@0.0.3 node_modules/express-logger
-├── mkdir@0.0.2
-├── express@2.5.9 (qs@0.4.2, mime@1.2.4, mkdirp@0.3.0, connect@1.9.2)
-└── datetime@0.0.3 (vows@0.8.1)
+sqlite3@3.0.5 node_modules\sqlite3
+└── nan@1.6.2
