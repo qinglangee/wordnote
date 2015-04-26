@@ -64,4 +64,4 @@ function initDatabase(){
 	db.close();
 }
 
-// initDatabase();
+exports.initDatabase = initDatabase;
