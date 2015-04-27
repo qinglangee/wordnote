@@ -127,6 +127,8 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
     var wordsToRecite = [];
     var Review = {};
+    var showIndex = -1;
+    var showWord;
     // 计算结果后，请求要背的所有单词
     function calculateAndGetWords(){
         wordsToRecite = [];
@@ -135,6 +137,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         Review.rest = 0;
         Review.forgetWords = {};
         Review.forget = 0;
+        showIndex = -1;
         showReview();
 
         calculate();
@@ -187,45 +190,58 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     }
 
     // 显示下一个
-    var showIndex = -1;
-    var showWord;
-    var Review = {};
     function showNextWord(){
-        showIndex = Math.floor(Math.random() * wordsToRecite.length);
-        showWord = wordsToRecite[showIndex];
-        $("#wordBox").html(showWord.text);
+        if(wordsToRecite.length > 0){
+            showIndex = Math.floor(Math.random() * wordsToRecite.length);
+            showWord = wordsToRecite[showIndex];
+            $("#wordBox").html(showWord.text);
+        }else{
+            $("#wordBox").html("今天单词背完了！！");
+        }
     }
     // 显示释义
     function showTranslate(){
         var html = "";
 
-        var pronounce = showWord.pronounce;
-        for(var i = 0; i < pronounce.length;i++){
-            html += pronounce[i].name + "--" + pronounce[i].text + "<br>";
-        }
-        $("#pronounceBox").html(html);
+        // 一个按钮多个用处
+        if(wordsToRecite.length > 0){
+            var pronounce = showWord.pronounce;
+            for(var i = 0; i < pronounce.length;i++){
+                html += pronounce[i].name + "--" + pronounce[i].text + "<br>";
+            }
+            $("#pronounceBox").html(html);
 
-        html = "";
-        var trans = showWord.translate;
-        for(var i = 0; i < trans.length;i++){
-            html += trans[i] + "<br>";
+            html = "";
+            var trans = showWord.translate;
+            for(var i = 0; i < trans.length;i++){
+                html += trans[i] + "<br>";
+            }
+            $("#translateBox").html(html);
+        }else{
+            for(var name in Review.forgetWords){
+                html += name + '\n';
+            }
+            $("#forgetWordArea").val(html);
         }
-        $("#translateBox").html(html);
     }
 
     // 不记得这个
     function forget(){
         Review.forgetWords[showWord.text] = 1;
+        console.log(Review.forgetWords);
         Review.forget ++;
         showReview();
     }
 
     // pass这个
     function pass(){
-        Review.rest--;
-        Review.passed++;
-        showNextWord();
+        if(wordsToRecite.length > 0 && showIndex >= 0){
+            Review.passed++;
+            var deletedWord = wordsToRecite.splice(showIndex,1);
+    //         console.log(deletedWord[0].text);
+        }
         showReview();
+        showNextWord();
     }
 
     // 更新Review显示
@@ -233,7 +249,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         $("#totalWords").html(Review.total);
         $("#passedWords").html(Review.passed);
         $("#forgetWords").html(Review.forget);
-        $("#restWords").html(Review.rest);
+        $("#restWords").html(wordsToRecite.length);
     }
     function concat(arr1, arr2){
         if(arr2 == null || arr2.length == 0){
@@ -242,6 +258,32 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         for(var i=0; i<arr2.length;i++){
             arr1[arr1.length] = arr2[i];
         }
+    }
+
+    // 保存忘记的
+    function saveForget(){
+
+		var content = $("#forgetWordArea").val();
+		var url = "/temp/save_forget";
+		$.post(url,{content:content},function(o){
+			if(o.err===0){
+				showInfo("提交成功--" + new Date());
+			}else{
+				showErr(o.msg + "--" + new Date());
+			}
+		},"json");
+    }
+
+    // 显示忘记的
+    function viewForget(){
+        var url = "/temp/view_forget";
+		$.get(url,{},function(o){
+			if(o.err===0){
+				$("#forgetWordArea").val(o.content);
+            }else{
+                showErr(o.msg);
+            }
+		},"json");
     }
 
 	getText();
@@ -255,4 +297,6 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("#showTranslate").on('click', showTranslate);
     $("#forget").on('click', forget);
     $("#pass").on('click', pass);
+    $("#saveForget").on('click', saveForget);
+    $("#viewForget").on('click', viewForget);
 });

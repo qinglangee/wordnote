@@ -69,8 +69,10 @@ app.post('/user/:name', user.post);
 
 app.get('/temp/page', temp.page);
 app.get('/temp/view', temp.view);
+app.get('/temp/view_forget', temp.view_forget);
 app.get('/temp/review_words', temp.review_words);
 app.post('/temp/save', temp.save);
+app.post('/temp/save_forget', temp.save_forget);
 app.post('/temp/saveDayWords', temp.saveDayWords);
 
 // init dirs

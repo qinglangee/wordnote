@@ -16,6 +16,7 @@ var Promise = require('promise');
 var NL = St.NL;
 
 var storeFile = serverConfig.tempdir.store;
+var forgetFile = serverConfig.tempdir.forget;
 var logFile = serverConfig.tempdir.log;
 
 var dayWordsDir = serverConfig.tempdir.wordsDir;
@@ -41,6 +42,36 @@ function searchAndSaveTranslate(text){
         }
     });
 }
+
+// 保存忘记的单词
+exports.save_forget = function(req, res){
+
+	var content = req.body.content;
+
+	console.log("content:" + content);
+    var ip = req.connection.remoteAddress;
+
+
+
+
+    var callback = function(err){
+        if(err > 0){
+            res.send(failed("写日志出错了"));
+        }else{
+            res.send(success());
+        }
+    }
+
+	fs.writeFile(forgetFile, content, function (err) {
+		if (err){
+			console.error('Can\'t save forgetFile - content:' + content);
+			res.send(failed("不能写入文件"));
+            return;
+		}
+
+		writeLog(content, ip, callback);
+	});
+};
 
 // 保存每日学习记录
 exports.save = function(req, res){
@@ -83,6 +114,23 @@ exports.view = function(req, res){
     	}
     	var ss = new String(data);
 	    var result = {"status": 1,"content": ss};
+		res.send(JSON.stringify(result));
+    });
+
+};
+
+// 刷新忘记的单词
+exports.view_forget = function(req, res){
+
+    fs.readFile(forgetFile, function(err,data){
+    	if(err){
+            var msg = "Get content error!!" + err;
+    		res.send(failed(msg));
+            return;
+    	}
+    	var ss = new String(data);
+	    var result = success();
+        result.content = ss;
 		res.send(JSON.stringify(result));
     });
 

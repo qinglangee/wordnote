@@ -1,5 +1,5 @@
-var base = "/home/zhch/document/wordnote/";
-// var base = "d:\\temp\\node_js_wordnote\\";
+// var base = "/home/zhch/document/wordnote/";
+var base = "d:\\temp\\node_js_wordnote\\";
 var wordnote ={
     logDir:base + "logs",
     logFile:"/notes.log",
@@ -9,6 +9,7 @@ var wordnote ={
 
 var tempdir = {
     store:base + "notes_store.js",
+    forget:base + "notes_forget.js",
     wordsDir:base + "daywords/",
 
 }
