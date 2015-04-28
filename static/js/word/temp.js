@@ -140,12 +140,21 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         showIndex = -1;
         showReview();
 
-        calculate();
-        var today = moment().format('YYYY-MM-DD'); // 当天的日期
-        var todayWords = resultMap[today];
+        var reviewDays = [];
+        if($("#reviewDays").val() != ""){
+            reviewDays = [{"name":$("#reviewDays").val()}];
+        }else{
+            calculate();
+            var today = moment().format('YYYY-MM-DD'); // 当天的日期
+            reviewDays = resultMap[today];
+        }
+
+
 		var url = "/temp/review_words";
 
         var localedDays = 0;
+
+        // 显示单词情况
         var wordsReady = function(day, dayWords){
             localedDays++;
             concat(wordsToRecite, dayWords);
@@ -155,9 +164,11 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             Review.total += dayWords.length;
             Review.rest += dayWords.length;
             $("#summary").html(html);
+            showReview();
 
         }
 
+        // 查询单词
         var getDayWords = function(days){
             var dayWords = storage.get(days);
             if(dayWords != null){
@@ -175,16 +186,19 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         }
         $("#summary").html(""); // 先清空内容
 
-        for(var i=0;i<todayWords.length; i++){
-            var days = todayWords[i].name;
+        for(var i=0;i<reviewDays.length; i++){
+            var days = reviewDays[i].name;
             getDayWords(days);
         }
 
 
     }
+
     // tab 切换
     function changeTab(){
         var tabId = $(this).attr("data-for");
+        $(".nav-pills>li").removeClass("active");
+        $(this).parent().addClass("active");
         $(".content-tab").hide();
         $("#"+ tabId).show();
     }
@@ -198,6 +212,8 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         }else{
             $("#wordBox").html("今天单词背完了！！");
         }
+        $("#pronounceBox").html("");
+        $("#translateBox").html("");
     }
     // 显示释义
     function showTranslate(){

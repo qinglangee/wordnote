@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>时间计算</title>
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 <style>
     .content{width: 200px; height: 500px;font-size:large}
     .editcontent{width: 500px;}
@@ -18,10 +20,11 @@
 </style>
 </head>
 <body>
-    <div id="tabs">
-        <a class="tab-link" data-for="home" href="javascript:void(0)">home</a>&nbsp;&nbsp;&nbsp;
-        <a class="tab-link" data-for="recall" href="javascript:void(0)">recall</a>&nbsp;&nbsp;&nbsp;
-    </div>
+<div class=".container-fluid">
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a class="tab-link" data-for="home" href="#">Home</a></li>
+        <li role="presentation"><a class="tab-link" data-for="recall" href="#">recall</a></li>
+    </ul>
     <div id="home" class="content-tab">
         content:
         <br>
@@ -38,6 +41,7 @@
         <label for="showOld">显示旧数据</label>
     </div>
         <input id="result" class="result"/>
+        <input id="reviewDays" />
     <div id="recall" class="content-tab">
         复习：<br>
         <div id="ready_days"></div>
@@ -65,6 +69,7 @@
         <input type="button" id="saveForget" value="保存忘记的" class="big_btn"/>
         <input type="button" id="viewForget" value="显示忘记的" class="big_btn"/>
     </div>
+</div>
 
 </body>
 <script type="text/javascript" data-main="../static/js/word/temp.js" src="../static/js/require.js" ></script>
