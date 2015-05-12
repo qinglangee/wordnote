@@ -36,7 +36,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 		},"json");
 	}
 
-	var reviewTime = [1,2,4,7,15,25];
+	var reviewTime = [1,2,4,7,15,25,70];
 	var resultMap = {};
 	function calculate(){ // 计算结果, 存在resultMap中
 		resultMap = {};
