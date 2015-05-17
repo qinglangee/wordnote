@@ -142,7 +142,12 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
         var reviewDays = [];
         if($("#reviewDays").val() != ""){
-            reviewDays = [{"name":$("#reviewDays").val()}];
+            var dayStrs = $("#reviewDays").val().split("   ");
+
+            reviewDays = [];
+            for(var i=0;i<dayStrs.length;i++){
+                reviewDays[i] = {"name":dayStrs[i]};
+            }
         }else{
             calculate();
             var today = moment().format('YYYY-MM-DD'); // 当天的日期
