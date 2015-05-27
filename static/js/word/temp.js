@@ -248,9 +248,11 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
     // 不记得这个
     function forget(){
+        if(Review.forgetWords[showWord.text] == null){
+            Review.forget ++;
+        }
         Review.forgetWords[showWord.text] = 1;
         console.log(Review.forgetWords);
-        Review.forget ++;
         showReview();
     }
 
@@ -307,6 +309,19 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 		},"json");
     }
 
+    function keybind(e){
+        var keycode = e.which;
+        console.log(keycode);
+        if(keycode == 37){  // 左
+            showNextWord();
+        }else if(keycode == 38){ // 上
+            forget();
+        }else if(keycode == 39){ // 右
+            showTranslate();
+        }else if(keycode == 40){ // down
+            pass();
+        }
+    }
 	getText();
 	$("#flush_btn").on('click', getText);
 	$("#submit_btn").on('click', submitText);
@@ -320,4 +335,5 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("#pass").on('click', pass);
     $("#saveForget").on('click', saveForget);
     $("#viewForget").on('click', viewForget);
+    $("body").keyup(keybind);
 });
