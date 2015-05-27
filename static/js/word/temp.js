@@ -333,13 +333,13 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         var keycode = e.which;
         console.log(keycode);
         if(keycode == 37){  // 左
-            showNextWord();
+            showTranslate();
         }else if(keycode == 38){ // 上
             forget();
         }else if(keycode == 39){ // 右
-            showTranslate();
-        }else if(keycode == 40){ // down
             pass();
+        }else if(keycode == 40){ // down
+            showNextWord();
         }
     }
 	getText();
