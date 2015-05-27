@@ -308,6 +308,26 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             }
 		},"json");
     }
+    
+    // 显示post按钮
+    var lastClick = 0;
+    var continueCount = 0;
+    function showPostBtns(){
+        var clickTime = new Date().getTime();
+        if(clickTime - lastClick < 500){
+            continueCount++;
+        }else{
+            continueCount = 0;
+        }
+        if(continueCount > 7){
+            $("#submit_btn").show();
+            $("#day_words_post").show();
+        }else{
+            $("#submit_btn").hide();
+            $("#day_words_post").hide();
+        }
+        lastClick = new Date().getTime();
+    }
 
     function keybind(e){
         var keycode = e.which;
@@ -336,4 +356,5 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("#saveForget").on('click', saveForget);
     $("#viewForget").on('click', viewForget);
     $("body").keyup(keybind);
+    $("#schedule").on('click', showPostBtns);
 });

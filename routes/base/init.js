@@ -55,6 +55,8 @@ exports.initApp = function(){
 var table_words = "CREATE TABLE words (name TEXT UNIQUE, translate TEXT)";
 // 初始化数据库
 function initDatabase(){
+    initDir();
+
     var dbFile = SC.wordnote.dbDir + SC.wordnote.dbFile;
     var db = new sqlite3.Database(dbFile);
     db.serialize(function() {
@@ -65,3 +67,5 @@ function initDatabase(){
 }
 
 exports.initDatabase = initDatabase;
+
+// initDatabase();
