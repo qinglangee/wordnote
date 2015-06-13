@@ -145,8 +145,8 @@ exports.page = function(req, res){
 exports.saveDayWords = function(req, res){
     var ip = req.connection.remoteAddress;
 
-    var content = req.body.content;
-    var lines = content.split(NL);
+    var reqContent = req.body.content;
+    var lines = reqContent.split(NL);
     var words = [];
     var time = '';
     for(var i=0;i<lines.length;i++){
@@ -191,7 +191,7 @@ exports.saveDayWords = function(req, res){
     var onlyWords = [];
     // 把words中的日期去掉，保存到onlyWords中
     for(var i=0; i < words.length; i++){
-        if(!/^\d+$/.test(words[i])){
+        if(!/^[\d|\s]+$/.test(words[i])){
             onlyWords[onlyWords.length] = words[i];
         }
     }
@@ -210,14 +210,22 @@ exports.saveDayWords = function(req, res){
             searchAndSaveTranslate(text);
         }
 	});
-}
+};
 
 // 返回所有要背的单词
 exports.review_words = function(req, res){
     var dayStr = url.parse(req.url,true).query.days;
     var wordsFile = dayWordsDir + dayStr;
     var fileContent = fs.readFileSync(wordsFile, {"encoding":"utf-8"});
-    var words = fileContent.split('\n');
+    var lines = fileContent.split('\n');
+    var words = [];
+    
+    // 再过滤一遍空字符串
+    for(var i=0; i < lines.length; i++){
+        if(!/^\s*$/.test(lines[i])){
+            words[words.length] = lines[i];
+        }
+    }
 
 
     dao.getWords(words).done(function(dbWords){
@@ -228,4 +236,4 @@ exports.review_words = function(req, res){
         Log.e(err);
         res.send(failed("取数据出错。"));
     });
-}
+};
