@@ -176,7 +176,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         // 查询单词
         var getDayWords = function(days){
             var dayWords = storage.get(days);
-            if(dayWords != null){
+            if(dayWords != null && dayWords.length > 0){
                 wordsReady(days, dayWords);
             }else{
                 $.get(url,{"days":days},function(o){
