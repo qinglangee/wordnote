@@ -67,14 +67,14 @@
             });
         }).on('error', function(e) {
             console.error("request word got error: " + e.message);
-        })
+        });
         req.end();
-    }
+    };
 
 
     var testFun = function(word){
         console.log(word);
-    }
+    };
 
     // _.search("hot", testFun);
 
