@@ -55,7 +55,9 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 					var num = reviewList.length;
 					var added = false;
 					for(k = 0;k<num;k++){
-						if(r.name < reviewList[k].name){
+                        rNameNum = new Number(r.name);
+                        kNameNum = new Number(reviewList[k].name);
+						if(rNameNum < kNameNum){
 							reviewList.splice(k,0,r);
 							added = true;
 						}
