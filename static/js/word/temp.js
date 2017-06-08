@@ -177,10 +177,9 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
         // 查询单词
         var getDayWords = function(days){
-            var forceReload = $("#force_reload_words").prop("checked");
-            console.log("force:", forceReload);
+            var forceReload = $("#force_reload_words").prop("checked"); // 有时单词加载错误，强制重刷一遍
             var dayWords = storage.get(days);
-            if(dayWords != null && dayWords.length > 0){
+            if(!forceReload && dayWords != null && dayWords.length > 0){
                 wordsReady(days, dayWords);
             }else{
                 $.get(url,{"days":days},function(o){
@@ -230,18 +229,20 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
         // 一个按钮多个用处
         if(wordsToRecite.length > 0){
-            var pronounce = showWord.pronounce;
-            for(var i = 0; i < pronounce.length;i++){
-                html += pronounce[i].name + "--" + pronounce[i].text + "<br>";
-            }
-            $("#pronounceBox").html(html);
+            if(showWord != null){
+		    var pronounce = showWord.pronounce;
+		    for(var i = 0; i < pronounce.length;i++){
+			html += pronounce[i].name + "--" + pronounce[i].text + "<br>";
+		    }
+		    $("#pronounceBox").html(html);
 
-            html = "";
-            var trans = showWord.translate;
-            for(var i = 0; i < trans.length;i++){
-                html += trans[i] + "<br>";
+		    html = "";
+		    var trans = showWord.translate;
+		    for(var i = 0; i < trans.length;i++){
+			html += trans[i] + "<br>";
+		    }
+		    $("#translateBox").html(html);
             }
-            $("#translateBox").html(html);
         }else{
             for(var name in Review.forgetWords){
                 html += name + '\n';
@@ -256,7 +257,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             Review.forget ++;
         }
         Review.forgetWords[showWord.text] = 1;
-        console.log(Review.forgetWords);
+        //console.log(Review.forgetWords);
         showReview();
     }
 
@@ -265,7 +266,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         if(wordsToRecite.length > 0 && showIndex >= 0){
             Review.passed++;
             var deletedWord = wordsToRecite.splice(showIndex,1);
-    //         console.log(deletedWord[0].text);
+    //         // console.log(deletedWord[0].text);
         }
         showReview();
         showNextWord();
@@ -335,7 +336,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
     function keybind(e){
         var keycode = e.which;
-        console.log(keycode);
+        // console.log(keycode);
         if(keycode == 37){  // 左
             showTranslate();
         }else if(keycode == 38){ // 上
