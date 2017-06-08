@@ -99,7 +99,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
 			var reviews = resultMap[day]; // 当天的复习列表
 			for(rec in reviews){
-				result += "   " + reviews[rec].name;
+				result += " " + reviews[rec].name;
 			}
 			if(reviews != null && reviews.length > 0){
 			}
@@ -144,7 +144,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
         var reviewDays = [];
         if($("#reviewDays").val() != ""){
-            var dayStrs = $("#reviewDays").val().split("   ");
+            var dayStrs = $("#reviewDays").val().split(" ");
 
             reviewDays = [];
             for(var i=0;i<dayStrs.length;i++){
@@ -157,7 +157,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         }
 
 
-		var url = "/temp/review_words";
+		    var url = "/temp/review_words";
 
         var localedDays = 0;
 
@@ -177,6 +177,8 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
         // 查询单词
         var getDayWords = function(days){
+            var forceReload = $("#force_reload_words").prop("checked");
+            console.log("force:", forceReload);
             var dayWords = storage.get(days);
             if(dayWords != null && dayWords.length > 0){
                 wordsReady(days, dayWords);
@@ -310,7 +312,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             }
 		},"json");
     }
-    
+
     // 显示post按钮
     var lastClick = 0;
     var continueCount = 0;
