@@ -21,7 +21,7 @@ exports.saveWord = function(word,cb){
 exports.getWord = function(text, cb){
     db.get("SELECT translate FROM words WHERE name=?", text, function(err, row){
         if(err){
-            Log.e(e)
+            Log.e(err)
             cb(null);
             return;
         }
