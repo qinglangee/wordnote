@@ -347,6 +347,10 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             showNextWord();
         }
     }
+    // 清空指定复习的日期
+    function clearReviewDays(){
+        $("#reviewDays").val("");
+    }
 	getText();
 	$("#flush_btn").on('click', getText);
 	$("#submit_btn").on('click', submitText);
@@ -362,4 +366,5 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("#viewForget").on('click', viewForget);
     $("body").keyup(keybind);
     $("#schedule").on('click', showPostBtns);
+    $("#clearReviewDays").on('click', clearReviewDays);
 });
