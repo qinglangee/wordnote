@@ -349,7 +349,13 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     }
     // 清空指定复习的日期
     function clearReviewDays(){
+        var temp = $("#reviewDays").val();
         $("#reviewDays").val("");
+        
+        if(temp == "show"){
+            $("#submit_btn").show();
+            $("#day_words_post").show();
+        }
     }
 	getText();
 	$("#flush_btn").on('click', getText);
