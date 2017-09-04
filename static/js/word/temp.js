@@ -83,6 +83,22 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 		});
 		return result;
 	}
+    
+    // records Map
+    function getRecordsMap(){
+        var records = getRecords();
+        var map = {};
+        var nowMills = new Date().getTime();
+        for(var i=0;i<records.length;i++){
+            var rec = records[i];
+            var recMills = moment(rec.time).toDate().getTime();
+            var dayPast = Math.floor((nowMills - recMills)/(1000*60*60*24));
+            rec['dayPast'] = dayPast;
+            // console.log(rec.name + " dayPast:" + dayPast);
+            map[rec.name] = rec;
+        }
+        return map;
+    }
 	function printResult(records){ // 打印结果
 		var currDay = moment(records[0].time);
 		var lastDay = moment(records[records.length-1].time).add(25, "d");
@@ -162,7 +178,13 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         var localedDays = 0;
 
         // 显示单词情况
-        var wordsReady = function(day, dayWords){
+        var wordsReady = function(day, dayWords, dayPast){
+            // 设置单词的 dayPast
+            for(var i=0;i<dayWords.length;i++){
+                dayWords[i]["dayPast"] = dayPast;
+            }
+            
+            
             localedDays++;
             concat(wordsToRecite, dayWords);
             $("#ready_days").html("ready days:" + localedDays);
@@ -174,18 +196,21 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             showReview();
 
         }
+        
+        var recordsMap = getRecordsMap();
 
         // 查询单词
         var getDayWords = function(days){
             var forceReload = $("#force_reload_words").prop("checked"); // 有时单词加载错误，强制重刷一遍
             var dayWords = storage.get(days);
+            var record = recordsMap[days];
             if(!forceReload && dayWords != null && dayWords.length > 0){
-                wordsReady(days, dayWords);
+                wordsReady(days, dayWords, record['dayPast']);
             }else{
                 $.get(url,{"days":days},function(o){
                     if(o.err===0){
                         storage.set(days, o.content);
-                        wordsReady(days, o.content);
+                        wordsReady(days, o.content, record['dayPast']);
                     }else{
                         showErr(o.msg);
                     }
@@ -198,7 +223,6 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             var days = reviewDays[i].name;
             getDayWords(days);
         }
-
 
     }
 
@@ -216,7 +240,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         if(wordsToRecite.length > 0){
             showIndex = Math.floor(Math.random() * wordsToRecite.length);
             showWord = wordsToRecite[showIndex];
-            $("#wordBox").html(showWord.text);
+            $("#wordBox").html(showWord.text + " past:" + showWord.dayPast);
         }else{
             $("#wordBox").html("今天单词背完了！！");
         }
