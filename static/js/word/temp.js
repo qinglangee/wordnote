@@ -36,8 +36,10 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 		},"json");
 	}
 
-	var reviewTime = [1,2,4,7,15,25,70];
+	var reviewTime = [1,2,4,7,15,25,70]; // 每隔天数复习
 	var resultMap = {};
+    
+    var allReviewWords = []; // 记录所有要复习的单词
 	function calculate(){ // 计算结果, 存在resultMap中
 		resultMap = {};
 		var records = getRecords();
@@ -156,6 +158,8 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         Review.forgetWords = {};
         Review.forget = 0;
         showIndex = -1;
+        
+        allReviewWords = []; // 清空数据
         showReview();
 
         var reviewDays = [];
@@ -179,9 +183,11 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 
         // 显示单词情况
         var wordsReady = function(day, dayWords, dayPast){
-            // 设置单词的 dayPast
             for(var i=0;i<dayWords.length;i++){
+                // 设置单词的 dayPast
                 dayWords[i]["dayPast"] = dayPast;
+                // 放入集合
+                allReviewWords.push(dayWords[i]);
             }
             
             
@@ -254,18 +260,18 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
         // 一个按钮多个用处
         if(wordsToRecite.length > 0){
             if(showWord != null){
-		    var pronounce = showWord.pronounce;
-		    for(var i = 0; i < pronounce.length;i++){
-			html += pronounce[i].name + "--" + pronounce[i].text + "<br>";
-		    }
-		    $("#pronounceBox").html(html);
+    		    var pronounce = showWord.pronounce;
+    		    for(var i = 0; i < pronounce.length;i++){
+    			    html += pronounce[i].name + "--" + pronounce[i].text + "<br>";
+    		    }
+    		    $("#pronounceBox").html(html);
 
-		    html = "";
-		    var trans = showWord.translate;
-		    for(var i = 0; i < trans.length;i++){
-			html += trans[i] + "<br>";
-		    }
-		    $("#translateBox").html(html);
+    		    html = "";
+    		    var trans = showWord.translate;
+    		    for(var i = 0; i < trans.length;i++){
+    			    html += trans[i] + "<br>";
+    		    }
+    		    $("#translateBox").html(html);
             }
         }else{
             for(var name in Review.forgetWords){
@@ -381,6 +387,40 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             $("#day_words_post").show();
         }
     }
+    // 显示所有的单词列表
+    function showAllReviewWords(){
+        var trsHtml = "";
+        console.log("allReviewWords.length" , allReviewWords.length);
+        for(var j=0;j<allReviewWords.length;j++){
+            try{
+                
+                var word = allReviewWords[j];
+                trsHtml += "<tr>";
+                trsHtml += "<td>" + word.text + "</td>";
+                
+                
+                var pronounce = word.pronounce;
+                trsHtml += "<td>"
+                for(var i = 0; i < pronounce.length;i++){
+                    trsHtml += pronounce[i].name + "--" + pronounce[i].text + "<br>";
+                }
+                trsHtml += "</td>"
+                
+                trsHtml += "<td>"
+                var trans = word.translate;
+                for(var i = 0; i < trans.length;i++){
+                    trsHtml += trans[i] + "<br>";
+                }
+                trsHtml += "</td>"
+                trsHtml += "</tr>";
+            }catch(e){
+                console.log("zhch err:", e);
+            }
+        }
+        $("#all_review_words_table").html(trsHtml);
+    }
+    
+    
 	getText();
 	$("#flush_btn").on('click', getText);
 	$("#submit_btn").on('click', submitText);
@@ -397,4 +437,5 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("body").keyup(keybind);
     $("#schedule").on('click', showPostBtns);
     $("#clearReviewDays").on('click', clearReviewDays);
+    $("#showAllReviewWords").on('click', showAllReviewWords);
 });
