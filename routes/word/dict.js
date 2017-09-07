@@ -18,7 +18,41 @@
     var http = require('http');
     var St = require('../common/string_utils');
 
+    var searchQueue = [];
+    var searching = false; // 正在查询的标志位，有单词在查询时设置为true
+    
+    /** 放入队列，然后递归调用 */
     _.search = function(searchText, callback){
+        searchQueue.splice(0, 0, {'text':searchText, 'callback':callback});
+        if(!searching){
+            _.recursiveSearch();
+        }
+    }
+    
+    /** 递归查询单词队列 */
+    _.recursiveSearch = function(){
+        searching = true;
+        if(searchQueue.length > 0){
+            searching = true;
+            var current = searchQueue[searchQueue.length - 1];
+            searchQueue.length = searchQueue.length - 1;
+            try{
+                _.searchFromWeb(current.text, function(word){
+                    current.callback(word);
+                    _.recursiveSearch();
+                });
+            }catch(e){
+                console.log("searchFromWeb find err:", e);
+                _.recursiveSearch();
+            }
+        }else{
+            searching = false;
+        }
+    }
+    
+    /** 查询网易网页 */
+    _.searchFromWeb = function(searchText, callback){
+        // console.log("search from web 163.");
 
         var opt = {
             host:'dict.youdao.com',
@@ -26,7 +60,7 @@
             method:'GET',
             path:'/search?keyfrom=dict.index&q=' + searchText,
             headers:{
-
+                // "User-Agent":"Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0"
             }
         }
 
@@ -37,7 +71,7 @@
                 body += d;
             }).on('end', function(){
                 //console.log(res.headers)
-                //console.log(body)
+                // console.log("body is:", body)
                 var html = $(body);
                 // 单词
                 var keyword = html.find(".keyword");
