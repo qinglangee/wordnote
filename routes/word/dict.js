@@ -21,6 +21,11 @@
     var searchQueue = [];
     var searching = false; // 正在查询的标志位，有单词在查询时设置为true
     
+    /** 返回队列查询数量 */
+    _.queueSize = function(){
+        return searchQueue.length;
+    }
+    
     /** 放入队列，然后递归调用 */
     _.search = function(searchText, callback){
         searchQueue.splice(0, 0, {'text':searchText, 'callback':callback});
@@ -39,11 +44,15 @@
             try{
                 _.searchFromWeb(current.text, function(word){
                     current.callback(word);
-                    _.recursiveSearch();
+                    setTimeout(function(){
+                        _.recursiveSearch();
+                    }, 1000);
                 });
             }catch(e){
-                console.log("searchFromWeb find err:", e);
-                _.recursiveSearch();
+                Log.e("searchFromWeb find err:", e);
+                setTimeout(function(){
+                    _.recursiveSearch();
+                }, 1000);
             }
         }else{
             searching = false;
@@ -52,7 +61,7 @@
     
     /** 查询网易网页 */
     _.searchFromWeb = function(searchText, callback){
-        // console.log("search from web 163.");
+        // Log.i("search from web 163.");
 
         var opt = {
             host:'dict.youdao.com',
@@ -66,12 +75,12 @@
 
         var body = '';
         var req = http.request(opt, function(res) {
-            //console.log("Got response: " + res.statusCode);
+            //Log.i("Got response: " + res.statusCode);
             res.on('data',function(d){
                 body += d;
             }).on('end', function(){
-                //console.log(res.headers)
-                // console.log("body is:", body)
+                //Log.i(res.headers)
+                // Log.i("body is:", body)
                 var html = $(body);
                 // 单词
                 var keyword = html.find(".keyword");
@@ -100,14 +109,14 @@
                 }
             });
         }).on('error', function(e) {
-            console.error("request word got error: " + e.message);
+            Log.e("request word got error: " + e.message, e);
         });
         req.end();
     };
 
 
     var testFun = function(word){
-        console.log(word);
+        Log.i(word);
     };
 
     // _.search("hot", testFun);

@@ -48,7 +48,7 @@ exports.save_forget = function(req, res){
 
 	var content = req.body.content;
 
-	console.log("content:" + content);
+	Log.i("content:" + content);
     var ip = req.connection.remoteAddress;
 
 
@@ -64,7 +64,7 @@ exports.save_forget = function(req, res){
 
 	fs.writeFile(forgetFile, content, function (err) {
 		if (err){
-			console.error('Can\'t save forgetFile - content:' + content);
+			Log.e('Can\'t save forgetFile - content:' + content);
 			res.send(failed("不能写入文件"));
             return;
 		}
@@ -78,7 +78,7 @@ exports.save = function(req, res){
 
 	var content = req.body.content;
 
-	console.log("content:" + content);
+	Log.i("content:" + content);
     var ip = req.connection.remoteAddress;
 
 
@@ -94,7 +94,7 @@ exports.save = function(req, res){
 
 	fs.writeFile(storeFile, content, function (err) {
 		if (err){
-			console.error('Can\'t save storeFile - content:' + content);
+			Log.e('Can\'t save storeFile - content:' + content, err);
 			res.send('{"status":0, "msg":"不能打开文件"}');
             return;
 		}
@@ -113,7 +113,7 @@ exports.view = function(req, res){
             return;
     	}
     	var ss = new String(data);
-	    var result = {"status": 1,"content": ss};
+	    var result = {"status": 1,"content": ss, "queue_size":dict.queueSize()};
 		res.send(JSON.stringify(result));
     });
 

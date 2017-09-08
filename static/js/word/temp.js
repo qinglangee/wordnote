@@ -18,6 +18,7 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 		$.get(url,{},function(o){
 			if(o.status===1){
 				$("#note_content").val(o.content);
+				$("#queue_size").html(o.queue_size);
 				calculate();
             }else{
                 showErr(o.msg);
