@@ -79,7 +79,10 @@ app.post('/temp/saveDayWords', temp.saveDayWords);
 var init = require('./routes/base/init');
 init.initApp();
 
-
-app.listen(app.get('port'), function(){
-    console.log('Express server listening on port ' + app.get('port'));
-});
+try{
+	app.listen(app.get('port'), function(){
+	    console.log('Express server listening on port ' + app.get('port'));
+	});
+}catch(Err){
+	console.log(Err);
+}
