@@ -46,13 +46,13 @@
                     current.callback(word);
                     setTimeout(function(){
                         _.recursiveSearch();
-                    }, 3000);
+                    }, 5000);
                 });
             }catch(e){
                 Log.e("searchFromWeb find err:", e);
                 setTimeout(function(){
                     _.recursiveSearch();
-                }, 3000);
+                }, 5000);
             }
         }else{
             searching = false;
