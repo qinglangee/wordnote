@@ -37,6 +37,10 @@
     /** 递归查询单词队列 */
     _.recursiveSearch = function(){
         searching = true;
+        var searchDelay = 5000; // 查询间隔
+        if(searchQueue.length > 30){
+            searchDelay = 20000; // 大批量的延长间隔时间
+        }
         if(searchQueue.length > 0){
             searching = true;
             var current = searchQueue[searchQueue.length - 1];
@@ -46,13 +50,13 @@
                     current.callback(word);
                     setTimeout(function(){
                         _.recursiveSearch();
-                    }, 5000);
+                    }, searchDelay);
                 });
             }catch(e){
                 Log.e("searchFromWeb find err:", e);
                 setTimeout(function(){
                     _.recursiveSearch();
-                }, 5000);
+                }, searchDelay);
             }
         }else{
             searching = false;
