@@ -46,6 +46,9 @@
             var current = searchQueue[searchQueue.length - 1];
             searchQueue.length = searchQueue.length - 1;
             try{
+                if(searchDelay > 5000){
+                    searchDelay = 30000 + Math.round(Math.random() * 30) * 1000;
+                }
                 _.searchFromWeb(current.text, function(word){
                     current.callback(word);
                     setTimeout(function(){
