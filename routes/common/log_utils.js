@@ -6,26 +6,24 @@ function addInfo(msg){
     return moment().format() + " " + msg;
 }
 
-function print(text, param2){
+function print(type, param1, param2){
+    var pretext = addInfo(type);
     if(param2 != null){
-        console.log(text, param2);
+        console.log(pretext, param1, param2);
     }else{
-        console.log(text);
+        console.log(pretext, param1);
     }
 }
 
 
-exports.d = function(msg, param2){
-    var text = addInfo(msg);
-    print("DEBUG " + text, param2);
+exports.d = function(param1, param2){
+    print("DEBUG ", param1, param2);
 }
-exports.i = function(msg, param2){
-    var text = addInfo(msg);
-    print("INFO " + text, param2);
+exports.i = function(param1, param2){
+    print("INFO ", param1, param2);
 }
-exports.e = function(msg, param2){
-    var text = addInfo(msg);
-    print("ERROR " + text, param2);
+exports.e = function(param1, param2){
+    print("ERROR ", param1, param2);
 }
 
 

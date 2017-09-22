@@ -13,13 +13,17 @@
         this._wrapped = obj;
     };
 
-    var jsdom = require('jsdom');
-    var $ = require('jquery')(jsdom.jsdom().parentWindow);
     var http = require('http');
     var St = require('../common/string_utils');
+    var Log = require('../common/log_utils');
+    var youdaoParser = require('./youdao_parser');
 
     var searchQueue = [];
     var searching = false; // 正在查询的标志位，有单词在查询时设置为true
+    var errCount = 0; // 错误重试计数器
+    var maxErrTryCount = 10; // 最大错误重试次数
+    var searchDelayInit = 1000; // 初始查询间隔
+    var searchDelay = 1000; // 查询间隔
     
     /** 返回队列查询数量 */
     _.queueSize = function(){
@@ -34,23 +38,33 @@
         }
     }
     
+    // 设置查询下一个单词
+    _.searchWordToNext = function(){
+        searchQueue.length = searchQueue.length - 1; // 完成后队列长度减１
+        errCount = 0;
+        searchDelay = searchDelayInit + Math.round(Math.random()*5)*1000;
+    }
+    
     /** 递归查询单词队列 */
     _.recursiveSearch = function(){
         searching = true;
-        var searchDelay = 5000; // 查询间隔
-        if(searchQueue.length > 30){
-            searchDelay = 20000; // 大批量的延长间隔时间
-        }
         if(searchQueue.length > 0){
             searching = true;
             var current = searchQueue[searchQueue.length - 1];
-            searchQueue.length = searchQueue.length - 1;
+            
             try{
-                if(searchDelay > 5000){
-                    searchDelay = 30000 + Math.round(Math.random() * 30) * 1000;
-                }
+                // searchDelay = 1000;
                 _.searchFromWeb(current.text, function(word){
-                    current.callback(word);
+                    if(word != null){
+                        current.callback(word);
+                        _.searchWordToNext();
+                    }else{
+                        errCount += 1;
+                        searchDelay  = searchDelay + 30000;
+                        if(errCount > maxErrTryCount){ // 超过最大重试次数，进行下一个
+                            _.searchWordToNext();
+                        }
+                    }
                     setTimeout(function(){
                         _.recursiveSearch();
                     }, searchDelay);
@@ -86,39 +100,21 @@
             res.on('data',function(d){
                 body += d;
             }).on('end', function(){
-                //Log.i(res.headers)
-                // Log.i("body is:", body)
-                var html = $(body);
-                // 单词
-                var keyword = html.find(".keyword");
-                var text = St.trim(keyword.text());
-                // 发音
-                var pronounce = [];
-                var pronName = html.find(".pronounce");
-                var pronText = html.find(".phonetic")
-                for(var i=0; i< pronName.length;i++){
-                    $(pronText).remove();
-                    var pronNameValue = $(pronName[i]).text()
-                    var pron = {"name":St.trim(pronNameValue), "text":St.trim($(pronText[i]).text())};
-                    pronounce[pronounce.length] = pron;
-                }
-                // 解释
-                var translate = [];
-                var transText = keyword.parent().siblings(".trans-container").find("ul>li");
-                for(var i = 0; i < transText.length; i++){
-                    translate[translate.length] = St.trim($(transText[i]).text());
-                }
-
-                // word 数据结构
-                var word = {"text":text, "pronounce":pronounce, "translate":translate};
-                if($.isFunction(callback)){
+                try{
+                    
+                    var word = youdaoParser.parse(body);
+                    // var word = {"text":searchText};
                     callback(word);
+                }catch(err001){
+                    Log.e("解析单词出错 :[" + searchText + "] ",err001);
+                    callback(null);
                 }
             });
         }).on('error', function(e) {
             Log.e("request word got error: " + e.message, e);
         });
         req.end();
+        req = null;
     };
 
 
