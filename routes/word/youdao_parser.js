@@ -70,6 +70,7 @@
     
     // jquery 配合 jsdom 使用来解析 html 会造成内存泄漏, 所以改用了 htmlparser, 保留代码记念．．．
     _.parseUseJquery = function(bodyParser){
+        return null;
         
           //Log.i(res.headers)
           // Log.i("body is:", body)
