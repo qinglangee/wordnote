@@ -388,6 +388,21 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
             $("#day_words_post").show();
         }
     }
+    // 设置指定复习的日期
+    function setReviewDays(){
+        var text = $("#reviewDays").val();
+        if(text == ""){
+            var records = getRecords();
+            $("#reviewDays").val(records[records.length - 1]["name"]);
+        }else{
+            var num = Number(text);
+            var newText = "0" + (num - 1);
+            while(newText.length < 5){
+                newText = "0" + newText;
+            }
+            $("#reviewDays").val(newText);
+        }
+    }
     // 显示所有的单词列表
     function showAllReviewWords(){
         var trsHtml = "";
@@ -438,5 +453,6 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("body").keyup(keybind);
     $("#schedule").on('click', showPostBtns);
     $("#clearReviewDays").on('click', clearReviewDays);
+    $("#setReviewDays").on('click', setReviewDays);
     $("#showAllReviewWords").on('click', showAllReviewWords);
 });
