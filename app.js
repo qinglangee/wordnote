@@ -4,13 +4,15 @@
 
 var express = require('express'),
     favicon = require('serve-favicon'),
-    logger = require('express-logger');
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     errorhandler = require('errorhandler'),
 	// http = require('http'),  // 4.x 不再需要
-    multer = require('multer');
+    multer = require('multer'),
 	path = require('path');
+var morgan = require('morgan'); // http 请求日志工肯
+var fs = require('fs');
+var rfs = require('rotating-file-stream');
 
 var
 	routes = require('./routes/index'),
@@ -30,12 +32,18 @@ app.set('views', __dirname + '/views');
 app.engine('.html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(favicon("favicon.ico"));
-app.use(logger({path: "./logoutput/catalina.out"}));
 //app.use(bodyParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
+// 设置日志输出到文件, 每天循环
+var logDirectory = path.join(__dirname, 'logoutput');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory); // 目录不在就创建
+
+// 创建一个循环写文件流，　每天循环
+var accessLogStream = rfs('access.log', { interval: '1d', path: logDirectory });
+app.use(morgan('combined', {stream: accessLogStream})); // 设置　logger
 
 //app.use(app.router);  // 4.x 不再需要了
 
