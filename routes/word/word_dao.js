@@ -16,6 +16,12 @@ exports.saveWord = function(word,cb){
 	  db.run("INSERT INTO words (name, translate) VALUES (?,?)", word.text, JSON.stringify(word), cb);
 	});
 };
+/** 更新单词 */
+exports.updateWord = function(word,cb){
+    db.serialize(function() {
+	  db.run("UPDATE words SET translate=? WHERE name=?", JSON.stringify(word), word.text, cb);
+	});
+};
 
 /** 查找单词 */
 exports.getWord = function(text, cb){
@@ -47,7 +53,11 @@ exports.getWords = function(wordsText, cb){
                     reject(err);
                 }else{
                     for(var i=0; i<rows.length; i++){
-                        words[words.length] = JSON.parse(rows[i].translate);
+                        try{
+                            words[words.length] = JSON.parse(rows[i].translate);
+                        }catch(err001){
+                            Log.e("数据库单词解析格式出错 text:", rows[i].translate, err001)
+                        }
                     }
                     fulfill(words);
                 }

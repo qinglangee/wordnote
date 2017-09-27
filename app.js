@@ -82,6 +82,7 @@ app.get('/temp/review_words', temp.review_words);
 app.post('/temp/save', temp.save);
 app.post('/temp/save_forget', temp.save_forget);
 app.post('/temp/saveDayWords', temp.saveDayWords);
+app.post('/temp/update_word', temp.update_word);
 
 // init dirs
 var init = require('./routes/base/init');

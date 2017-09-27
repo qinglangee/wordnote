@@ -412,28 +412,51 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
                 
                 var word = allReviewWords[j];
                 trsHtml += "<tr>";
-                trsHtml += "<td>" + word.text + "</td>";
+                trsHtml += '<td id="word_in_list_' + j + '">' + word.text + "</td>";
                 
                 
                 var pronounce = word.pronounce;
-                trsHtml += "<td>"
+                trsHtml += "<td>";
                 for(var i = 0; i < pronounce.length;i++){
                     trsHtml += pronounce[i].name + "--" + pronounce[i].text + "<br>";
                 }
-                trsHtml += "</td>"
+                trsHtml += "</td>";
                 
-                trsHtml += "<td>"
+                trsHtml += "<td>";
                 var trans = word.translate;
                 for(var i = 0; i < trans.length;i++){
                     trsHtml += trans[i] + "<br>";
                 }
-                trsHtml += "</td>"
+                trsHtml += "</td>";
+                
+                trsHtml += "<td>";
+                trsHtml += '<input type="button" value="更新" data-text="'+ word.text +'" class="update_word_btn"/>';
+                trsHtml += "</td>";
                 trsHtml += "</tr>";
             }catch(e){
                 console.log("zhch err:", e);
             }
         }
         $("#all_review_words_table").html(trsHtml);
+        $(".update_word_btn").on('click', updateListWord);
+    }
+    
+    // 重新查单词更新数据库
+    function updateListWord(){
+        var text = $(this).attr("data-text");
+        updateWord(text);
+    }
+        
+    // 重新查单词更新数据库
+    function updateWord(text){
+		var url = "/temp/update_word";
+		$.post(url, {text:text}, function(o){
+			if(o.err===0){
+				showInfo("更新单词成功--" + new Date());
+			}else{
+				showErr(o.msg + "--" + new Date());
+			}
+		},"json");
     }
     
     
@@ -455,4 +478,5 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("#clearReviewDays").on('click', clearReviewDays);
     $("#setReviewDays").on('click', setReviewDays);
     $("#showAllReviewWords").on('click', showAllReviewWords);
+    $(".update_word_btn").on('click', updateListWord);
 });

@@ -27,8 +27,8 @@ var failed = respFunc.failed;
 // 写日志
 var writeLog = respFunc.writeLog;
 
+// 数据库里查一下， 没有的就插入
 function searchAndSaveTranslate(text){
-    // 数据库里查一下， 没有的就插入
     dao.getWord(text, function(dbWord){
         if(dbWord == null){
             dict.search(text, function(word){
@@ -43,6 +43,19 @@ function searchAndSaveTranslate(text){
     });
 }
 
+// 重新查单词，更新数据库中的
+exports.update_word = function(req, res){
+    var text = req.body.text;
+    dict.search(text, function(word){
+        dao.updateWord(word, function(err){
+            if(err)
+                Log.e(err);
+            else
+                Log.i("更新一条单词： " + text);
+        });
+    });
+}
+
 // 保存忘记的单词
 exports.save_forget = function(req, res){
 
@@ -50,9 +63,6 @@ exports.save_forget = function(req, res){
 
 	Log.i("content:" + content);
     var ip = req.connection.remoteAddress;
-
-
-
 
     var callback = function(err){
         if(err > 0){
