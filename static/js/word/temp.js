@@ -459,6 +459,36 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
 		},"json");
     }
     
+    // 计划列表中添加一天
+    function addSchedule(){
+        var records = getRecords();
+        var last = records[records.length - 1];
+        var name = "0" + (Number(last.name) + 1);
+        var lastDate = moment(last.time);
+        while(name.length < 5){
+            name = "0" + name;
+        }
+        
+        var now = moment().startOf("day");
+        
+        var str = "";
+        if(lastDate.isBefore(now)){
+            str = now.format('YYYY-MM-DD');
+        }else{
+            str = moment(last.time).add(1, "days").format('YYYY-MM-DD');
+        }
+        var newDate = moment(str);
+        
+        str = str + "|" + name + "|9";
+        var content = $("#note_content").val();
+        if(lastDate.startOf("week").format('YYYY-MM-DD') == newDate.startOf("week").format('YYYY-MM-DD')){
+            $("#note_content").val(content + "\n" + str);
+        }else{
+            $("#note_content").val(content + "\n\n" + str);
+        }
+        
+    }
+    
     
 	getText();
 	$("#flush_btn").on('click', getText);
@@ -479,4 +509,5 @@ require(['jquery', 'moment', '../single_lib/simpleStorage'],function($, moment, 
     $("#setReviewDays").on('click', setReviewDays);
     $("#showAllReviewWords").on('click', showAllReviewWords);
     $(".update_word_btn").on('click', updateListWord);
+    $("#add_schedule").on('click', addSchedule);
 });
