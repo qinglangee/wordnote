@@ -1,2 +1,4 @@
 #! /bin/bash
+
+# 下载线上数据库和日志
 scp -r zhch@182.92.83.14:/home/zhch/document/wordnote/* .
