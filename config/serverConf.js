@@ -12,7 +12,13 @@ var tempdir = {
     forget:base + "notes_forget.js",
     wordsDir:base + "daywords/",
 
-}
+};
+
+var game = {
+    uploadPicDir: base + "game_pics/"
+};
+
 exports.wordnote=wordnote;
 exports.tempdir=tempdir;
 exports.base=base;
+exports.game=game;

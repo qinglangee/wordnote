@@ -1,6 +1,6 @@
 
 // 保存用户
-function save(){
+function save(req, res){
 	
 }
 

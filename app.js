@@ -19,7 +19,9 @@ var
 	user = require('./routes/user/user'),
 	word = require('./routes/word/word'),
 	note = require('./routes/note/note'),
-	temp = require('./routes/word/word_temp.js');
+	temp = require('./routes/word/word_temp.js'),
+
+	gamePic = require('./routes/game/pic');
 
 
 
@@ -83,6 +85,9 @@ app.post('/temp/save', temp.save);
 app.post('/temp/save_forget', temp.save_forget);
 app.post('/temp/saveDayWords', temp.saveDayWords);
 app.post('/temp/update_word', temp.update_word);
+
+// 图片二进制上传
+app.post('/game/pic/:name', gamePic.post);
 
 // init dirs
 var init = require('./routes/base/init');

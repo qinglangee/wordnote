@@ -6,6 +6,8 @@
         "start": "/home/lifeix/local/bin/node app.js"
     },
     "//":"express use version 4.15.4 other than *  - 20170926",
+    "module-moment" : "use for time and date parse",
+    "module-multiparty" : "use for file upload",
     "dependencies": {
         "express": "4.15.4",
         "serve-favicon": "*",
@@ -29,6 +31,7 @@
         "moment": "^2.18.1",
         
         "htmlparser":"1.7.7",
-        "soupselect":"0.2.0"
+        "soupselect":"0.2.0",
+        "multiparty":"4.2.1"
     }
 }
