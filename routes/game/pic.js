@@ -22,11 +22,12 @@ function save(req, res){
     form.parse(req, function(err, fields, files) {
         if(err){
             res.send(failed("出错了 " + err));
+            return;
         }
         // console.log("pass:" + fields["pass"]);
 
         if(files != null && files["upload"] != null){
-            console.log("path:" + files["upload"][0].path);
+            LOG.i("path:" + files["upload"][0].path);
         }
         // console.log(files);
         res.send(success());

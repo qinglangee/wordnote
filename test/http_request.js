@@ -123,7 +123,8 @@ function requestPost3(){
     // form.append('remote_file', request('http://google.com/doodle.png'));
 }
 function requestPost4(){
-    var url = 'http://localhost:6024/game/pic/save';
+    var url = 'http://182.92.83.14:6024/game/pic/save';
+    // 用stream传入文件参数
     var form = {
         pass:"ahama",
         upload: fs.createReadStream('/home/zhch/temp/d3/wood2.jpg'), 
@@ -135,10 +136,31 @@ function requestPost4(){
         }
     });
 }
+function requestPost5(){
+    // var url = 'http://182.92.83.14:6024/game/pic/save';
+    var url = 'http://localhost:6024/game/pic/save';
+    fs.readFile('/home/zhch/temp/d3/wood.jpg', 'binary',function(err,data){
+	    if(err) throw err;
+	    // var jsonObj = JSON.parse(data);
+
+        // 用Buffers传入文件参数
+        var form = {
+            pass:"ahama",
+            upload: new Buffer(data), 
+        };
+        request.post({url:url, formData:form}, function(error, response, body){
+            if (!error && response.statusCode == 200) {
+                //输出返回的内容
+                console.log(body);
+            }
+        });
+	});
+
+}
 
 // sendUrlEncode();
 // sendJson();
 
 // requestGet();
-requestPost4();
+requestPost5();
 
