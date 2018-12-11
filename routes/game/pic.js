@@ -1,5 +1,7 @@
 
 var multiparty = require('multiparty');
+var fs = require("fs");
+var path = require("path");
 
 
 var serverConfig = require('../../config/serverConf');
@@ -13,6 +15,7 @@ var failed = respFunc.failed;
 
 // 上传文件保存的位置
 var uploadPicDir = serverConfig.game.uploadPicDir;
+var selfUploadPicDir = serverConfig.game.selfUploadPicDir;
 
 // 保存图片
 // multipart/form-data 类型, 参数 pass 是验证, upload是文件
@@ -20,6 +23,8 @@ function save(req, res){
 	
     var form = new multiparty.Form({uploadDir:uploadPicDir});
     form.parse(req, function(err, fields, files) {
+        var uploadType = fields["type"];
+        
         if(err){
             res.send(failed("出错了 " + err));
             return;
@@ -27,7 +32,15 @@ function save(req, res){
         // console.log("pass:" + fields["pass"]);
 
         if(files != null && files["upload"] != null){
-            LOG.i("path:" + files["upload"][0].path);
+            var filePath = files["upload"][0].path;
+            Log.i("path:" + filePath);
+
+            // 自主上传的换一个目录
+            if(uploadType == "self"){
+                var fileName = path.basename(filePath);
+                var destPath = path.join(selfUploadPicDir, fileName);
+                fs.rename(filePath, destPath);
+            }
         }
         // console.log(files);
         res.send(success());

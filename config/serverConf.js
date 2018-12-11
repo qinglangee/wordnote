@@ -15,7 +15,8 @@ var tempdir = {
 };
 
 var game = {
-    uploadPicDir: base + "game_pics/"
+    uploadPicDir: base + "game_pics/",
+    selfUploadPicDir: base + "game_pics_self/"
 };
 
 exports.wordnote=wordnote;
